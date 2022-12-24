@@ -1,9 +1,21 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
-import { SiGithub, SiGoogle } from 'react-icons/si';
-import { motion } from 'framer-motion';
+
+import { AnimatePresence, AnimationProps, motion } from 'framer-motion';
+import LoginFormContent from './components/LoginFormContent';
+import RegisterFormContent from './components/RegisterFormContent';
 
 const queryClient = new QueryClient();
+
+const variantsPresence: AnimationProps['variants'] = {
+  initial: {
+    x: 1000,
+  },
+  animate: { x: 0 },
+  exit: {
+    x: -1000,
+  },
+};
 
 const variants = {
   login: {
@@ -29,14 +41,11 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <div className='flex min-h-screen flex-col justify-center bg-primary-light '>
         <motion.div
-          layout={'size'}
-          className='mx-auto flex w-full max-w-sm flex-col items-center space-y-6 rounded-xl border border-primary bg-white p-8 shadow-lg shadow-primary/30'
+          animate={formType}
+          initial={formType}
+          className='mx-auto flex w-full max-w-sm flex-col items-center space-y-6 overflow-hidden rounded-xl border border-primary bg-white p-8 shadow-lg shadow-primary/30'
         >
-          <motion.div
-            animate={formType}
-            initial={formType}
-            className='relative flex w-full justify-evenly space-x-1 overflow-hidden rounded-xl border-2 border-primary bg-primary-light p-1'
-          >
+          <div className='relative flex w-full justify-evenly space-x-1 overflow-hidden rounded-xl border-2 border-primary bg-primary-light p-1'>
             <div
               className={`${
                 isLogin ? 'text-white' : 'text-primary'
@@ -59,44 +68,25 @@ function App() {
               transition={{ type: 'spring', bounce: 0.2, duration: 0.5 }}
               className='absolute h-[calc(100%-8px)] w-[calc(50%-4px)] rounded-lg bg-primary'
             />
-          </motion.div>
-          <label
-            htmlFor='email'
-            className='flex w-full flex-col text-sm font-medium text-neutral-dark'
-          >
-            Email
-            <span className='mb-2'></span>
-            <input
-              name='email'
-              type='text'
-              className=' rounded-xl border-2 border-neutral-light p-4 outline-2 outline-primary transition-all placeholder:text-sm placeholder:text-neutral-light focus:placeholder:text-primary'
-              placeholder={'Enter an email'}
-            />
-          </label>
-          <label
-            htmlFor='email'
-            className='mb-4 flex w-full flex-col text-sm font-medium text-neutral-dark'
-          >
-            Password
-            <span className='mb-2'></span>
-            <input
-              type='text'
-              className='w-full rounded-xl border-2 border-neutral-light p-4 outline-2 outline-primary transition-all placeholder:text-sm placeholder:text-neutral-light focus:placeholder:text-primary'
-              placeholder={'Enter a password'}
-            />
-          </label>
-          <button className='w-full rounded-xl bg-primary p-4 font-semibold text-white transition-all hover:scale-[101%] hover:shadow-md hover:shadow-primary/30'>
-            Login
-          </button>
-          <div className='flex w-full justify-evenly space-x-6'>
-            <button className='flex w-full items-center justify-center rounded-xl bg-[#171515] p-4 font-semibold text-white transition-all hover:scale-[101%] hover:shadow-md hover:shadow-[#171515]/30'>
-              <SiGithub className='mr-2' /> Github
-            </button>
-            <button className='hover:[#4c8bf5]/30 flex w-full items-center justify-center rounded-xl bg-[#4c8bf5] p-4 font-semibold text-white transition-all hover:scale-[101%] hover:shadow-md'>
-              <SiGoogle className='mr-2' />
-              Google
-            </button>
           </div>
+          {/* FIXME: make forms slide from proper side */}
+          <AnimatePresence initial={false} exitBeforeEnter>
+            <motion.form
+              key={isLogin ? 'loginFormContent' : 'registerFormContent'}
+              className='flex w-full flex-col space-y-6'
+              variants={variantsPresence}
+              animate={'animate'}
+              exit={'exit'}
+              initial={'initial'}
+              transition={{ duration: 0.3 }}
+            >
+              {isLogin ? (
+                <LoginFormContent key={'loginFormContent'} />
+              ) : (
+                <RegisterFormContent key={'registerFormContent'} />
+              )}
+            </motion.form>
+          </AnimatePresence>
         </motion.div>
       </div>
     </QueryClientProvider>

@@ -9,3 +9,13 @@
   padding: 0;
   font-family: 'Quicksand', sans-serif;
 }
+
+@layer components {
+  .input {
+    @apply rounded-xl border-2 border-neutral-light p-4 outline-2 outline-primary transition-all placeholder:text-sm placeholder:text-neutral-light focus:placeholder:text-primary;
+  }
+
+  .label {
+    @apply flex w-full flex-col text-sm font-medium text-neutral-dark transition-all focus-within:text-primary;
+  }
+}
