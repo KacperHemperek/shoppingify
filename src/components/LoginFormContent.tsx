@@ -1,15 +1,4 @@
 import { SiGithub, SiGoogle } from 'react-icons/si';
-import { AnimationProps, motion } from 'framer-motion';
-
-const variants: AnimationProps['variants'] = {
-  initial: {
-    x: -1000,
-  },
-  animate: { x: 0 },
-  exit: {
-    x: -1000,
-  },
-};
 
 function LoginFormContent() {
   return (

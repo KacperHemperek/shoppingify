@@ -7,14 +7,16 @@ import RegisterFormContent from './components/RegisterFormContent';
 
 const queryClient = new QueryClient();
 
+const X_WIDTH = 500;
+
 const variantsPresence: AnimationProps['variants'] = {
-  initial: {
-    x: 1000,
-  },
+  initial: (right: boolean) => ({
+    x: right ? -X_WIDTH : X_WIDTH,
+  }),
   animate: { x: 0 },
-  exit: {
-    x: -1000,
-  },
+  exit: (right: boolean) => ({
+    x: right ? -X_WIDTH : X_WIDTH,
+  }),
 };
 
 const variants = {
@@ -39,11 +41,12 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className='flex min-h-screen flex-col justify-center bg-primary-light '>
+      <div className='flex min-h-screen flex-col justify-center bg-white  md:bg-primary-light '>
         <motion.div
           animate={formType}
           initial={formType}
-          className='mx-auto flex w-full max-w-sm flex-col items-center space-y-6 overflow-hidden rounded-xl border border-primary bg-white p-8 shadow-lg shadow-primary/30'
+          layout
+          className='mx-auto flex w-full max-w-sm flex-col items-center space-y-6 overflow-hidden rounded-xl bg-white p-8 shadow-primary/30 md:border md:border-primary md:shadow-lg'
         >
           <div className='relative flex w-full justify-evenly space-x-1 overflow-hidden rounded-xl border-2 border-primary bg-primary-light p-1'>
             <div
@@ -65,12 +68,12 @@ function App() {
 
             <motion.div
               variants={variants}
-              transition={{ type: 'spring', bounce: 0.2, duration: 0.5 }}
+              transition={{ duration: 0.3 }}
               className='absolute h-[calc(100%-8px)] w-[calc(50%-4px)] rounded-lg bg-primary'
             />
           </div>
-          {/* FIXME: make forms slide from proper side */}
-          <AnimatePresence initial={false} exitBeforeEnter>
+
+          <AnimatePresence initial={false} mode={'wait'}>
             <motion.form
               key={isLogin ? 'loginFormContent' : 'registerFormContent'}
               className='flex w-full flex-col space-y-6'
@@ -78,7 +81,8 @@ function App() {
               animate={'animate'}
               exit={'exit'}
               initial={'initial'}
-              transition={{ duration: 0.3 }}
+              custom={isLogin}
+              transition={{ duration: 0.2 }}
             >
               {isLogin ? (
                 <LoginFormContent key={'loginFormContent'} />
