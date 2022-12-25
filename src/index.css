@@ -18,4 +18,8 @@
   .label {
     @apply flex w-full flex-col text-sm font-medium text-neutral-dark transition-all focus-within:text-primary;
   }
+
+  .submit-button {
+    @apply w-full rounded-xl bg-primary p-4 font-semibold text-white transition-all hover:scale-[101%] hover:shadow-md hover:shadow-primary/30 disabled:cursor-not-allowed disabled:bg-neutral/60 disabled:text-neutral-light disabled:hover:scale-100 disabled:hover:shadow-none;
+  }
 }

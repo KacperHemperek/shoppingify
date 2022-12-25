@@ -74,9 +74,9 @@ function App() {
           </div>
 
           <AnimatePresence initial={false} mode={'wait'}>
-            <motion.form
+            <motion.div
               key={isLogin ? 'loginFormContent' : 'registerFormContent'}
-              className='flex w-full flex-col space-y-6'
+              className='w-full '
               variants={variantsPresence}
               animate={'animate'}
               exit={'exit'}
@@ -89,7 +89,7 @@ function App() {
               ) : (
                 <RegisterFormContent key={'registerFormContent'} />
               )}
-            </motion.form>
+            </motion.div>
           </AnimatePresence>
         </motion.div>
       </div>

@@ -2,7 +2,7 @@ import { SiGithub, SiGoogle } from 'react-icons/si';
 
 function LoginFormContent() {
   return (
-    <>
+    <form className='flex w-full flex-col space-y-6'>
       <label htmlFor='email' className='label'>
         Email
         <span className='mb-2'></span>
@@ -22,7 +22,7 @@ function LoginFormContent() {
           placeholder={'Enter a password'}
         />
       </label>
-      <button className='w-full rounded-xl bg-primary p-4 font-semibold text-white transition-all hover:scale-[101%] hover:shadow-md hover:shadow-primary/30'>
+      <button type='submit' className='submit-button'>
         Login
       </button>
       <div className='flex w-full justify-evenly space-x-6'>
@@ -34,7 +34,7 @@ function LoginFormContent() {
           Google
         </button>
       </div>
-    </>
+    </form>
   );
 }
 
