@@ -48,7 +48,10 @@ function App() {
           layout
           className='mx-auto flex w-full max-w-sm flex-col items-center space-y-6 overflow-hidden rounded-xl bg-white p-8 shadow-primary/30 md:border md:border-primary md:shadow-lg'
         >
-          <div className='relative flex w-full justify-evenly space-x-1 overflow-hidden rounded-xl border-2 border-primary bg-primary-light p-1'>
+          <motion.div
+            layout
+            className='relative flex w-full justify-evenly space-x-1 overflow-hidden rounded-xl border-2 border-primary bg-primary-light p-1'
+          >
             <div
               className={`${
                 isLogin ? 'text-white' : 'text-primary'
@@ -71,7 +74,7 @@ function App() {
               transition={{ duration: 0.3 }}
               className='absolute h-[calc(100%-8px)] w-[calc(50%-4px)] rounded-lg bg-primary'
             />
-          </div>
+          </motion.div>
 
           <AnimatePresence initial={false} mode={'wait'}>
             <motion.div
@@ -82,6 +85,7 @@ function App() {
               exit={'exit'}
               initial={'initial'}
               custom={isLogin}
+              layout
               transition={{ duration: 0.2 }}
             >
               {isLogin ? (
