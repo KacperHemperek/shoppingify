@@ -1,4 +1,5 @@
 import { SiGithub, SiGoogle } from 'react-icons/si';
+import FormSubmitButton from './FormSubmitButton';
 
 function LoginFormContent() {
   return (
@@ -22,9 +23,7 @@ function LoginFormContent() {
           placeholder={'Enter a password'}
         />
       </label>
-      <button type='submit' className='submit-button'>
-        Login
-      </button>
+      <FormSubmitButton buttonText='Login' isValid={true} loading={false} />
       <div className='flex w-full justify-evenly space-x-6'>
         <button className='flex w-full items-center justify-center rounded-xl bg-[#171515] p-4 font-semibold text-white transition-all hover:scale-[101%] hover:shadow-md hover:shadow-[#171515]/30'>
           <SiGithub className='mr-2' /> Github

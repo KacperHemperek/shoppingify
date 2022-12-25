@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { AnimatePresence, AnimationProps, motion } from 'framer-motion';
 import LoginFormContent from './components/LoginFormContent';
 import RegisterFormContent from './components/RegisterFormContent';
+import { auth } from './lib/firebase';
 
 const queryClient = new QueryClient();
 
