@@ -12,8 +12,9 @@ function useLogin() {
   }) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-    } catch (err) {
-      throw new Error();
+    } catch (err: any) {
+      console.log(err.message);
+      throw new Error(err.message);
     }
   };
 

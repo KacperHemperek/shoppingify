@@ -1,6 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import React from 'react';
 import { auth } from '../lib/firebase';
 
 function useSignUp() {
@@ -15,10 +14,10 @@ function useSignUp() {
   }) => {
     try {
       const cred = await createUserWithEmailAndPassword(auth, email, password);
-
       await updateProfile(cred.user, { displayName: name });
+      console.log({ cred });
     } catch (err: any) {
-      console.log(err);
+      console.error(err);
       throw new Error(err.code);
     }
   };

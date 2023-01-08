@@ -12,13 +12,12 @@ function FormSubmitButton({
 }) {
   return (
     <motion.button
-      style={{ borderRadius: loading ? '100px' : '12px' }}
       layout
-      className={`${loading && 'w-auto'} submit-button`}
+      className={'submit-button'}
       disabled={(!isValid && isValid !== undefined) || loading}
     >
       {loading ? (
-        <motion.div layout={'size'} className='flex max-w-[20px] self-center'>
+        <motion.div layout={'position'} className='flex w-auto self-center'>
           <Puff width={'20'} height={'20'} wrapperClass={''} color={'white'} />
         </motion.div>
       ) : (

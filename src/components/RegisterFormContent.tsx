@@ -3,7 +3,6 @@ import { SiGithub, SiGoogle } from 'react-icons/si';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { useState } from 'react';
 import FormSubmitButton from './FormSubmitButton';
 import useLoginWithGoogle from '../hooks/useLoginWithGoogle';
 import useLoginWithGithub from '../hooks/useLoginWithGithub';
@@ -32,10 +31,8 @@ function RegisterFormContent() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { isValid },
   } = useForm<RegisterFormInputs>({ resolver: zodResolver(schema) });
-
-  console.log({ errorsFromUseForm: errors });
 
   const { mutate: signInWithGoogle } = useLoginWithGoogle();
   const { mutate: signInWithGithub } = useLoginWithGithub();
@@ -44,10 +41,9 @@ function RegisterFormContent() {
   const onSubmit = async (data: RegisterFormInputs) => {
     try {
       await signUp(data);
-
       alert('Sign Up Success');
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 

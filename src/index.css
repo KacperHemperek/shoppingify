@@ -20,6 +20,6 @@
   }
 
   .submit-button {
-    @apply flex items-center w-full justify-center self-center bg-primary p-4 font-semibold text-white transition-colors hover:scale-[101%] hover:shadow-md hover:shadow-primary/30 disabled:cursor-not-allowed disabled:bg-primary/60 disabled:hover:scale-100 disabled:hover:shadow-none;
+    @apply flex w-full items-center justify-center self-center  rounded-xl bg-primary p-4 font-semibold text-white transition-colors hover:scale-[101%] hover:shadow-md hover:shadow-primary/30 disabled:cursor-not-allowed disabled:bg-primary/60 disabled:hover:scale-100 disabled:hover:shadow-none;
   }
 }
