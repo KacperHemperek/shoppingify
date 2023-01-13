@@ -23,7 +23,6 @@ const variantsPresence: AnimationProps['variants'] = {
     x: right ? -X_WIDTH : X_WIDTH,
   }),
 };
-
 function Login() {
   const [formType, setFormType] = useState<'login' | 'register'>('login');
   const isLogin = formType === 'login';
@@ -36,7 +35,7 @@ function Login() {
   };
 
   return (
-    <div className='flex min-h-screen flex-col justify-center bg-white  md:bg-primary-light '>
+    <div className='flex min-h-screen flex-col justify-center bg-neutral-extralight  '>
       <motion.div
         animate={formType}
         initial={formType}

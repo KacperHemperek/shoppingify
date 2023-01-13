@@ -5,12 +5,6 @@ import { auth } from '../../lib/firebase';
 
 function Homepage() {
   const { user, loading, error } = useUser();
-  const navigate = useNavigate();
-
-  const logout = () => {
-    signOut(auth);
-    navigate('/login');
-  };
 
   if (loading) {
     return <div className='mx-auto max-w-fit'>Loading...</div>;
@@ -31,12 +25,6 @@ function Homepage() {
   return (
     <div className='mx-auto flex max-w-fit flex-col text-center'>
       {user.email}
-      <button
-        className='my-4 rounded-lg bg-primary p-2 text-white'
-        onClick={logout}
-      >
-        logout
-      </button>
     </div>
   );
 }

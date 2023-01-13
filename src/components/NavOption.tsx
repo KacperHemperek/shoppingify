@@ -2,19 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
 
-function NavOption({
-  active,
-  icon,
-  onClick,
-  to,
-}: {
-  active: boolean;
-  to: string;
-  icon: React.ReactNode;
-  onClick: React.MouseEventHandler;
-}) {
+function NavOption({ icon, to }: { to: string; icon: React.ReactNode }) {
   return (
-    <NavLink to={to} onClick={onClick} className='flex h-14 items-center'>
+    <NavLink to={to} className='flex h-14 items-center'>
       {({ isActive }: { isActive: boolean }) =>
         isActive ? (
           <>

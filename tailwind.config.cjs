@@ -9,10 +9,13 @@ module.exports = {
           light: '#FFF0DE',
         },
         secondary: {
-          DEFAULT: '#56CCF2',
+          DEFAULT: '#80485B',
         },
         success: {
-          DEFAULT: '#80485B',
+          DEFAULT: '#56CCF2',
+        },
+        danger: {
+          DEFAULT: '#EB5757',
         },
         neutral: {
           DEFAULT: '#454545',
