@@ -1,5 +1,11 @@
 import { useState } from 'react';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import {
+  Outlet,
+  useHref,
+  useLocation,
+  useMatches,
+  useNavigate,
+} from 'react-router-dom';
 import {
   ShoppingCartIcon,
   ArrowPathIcon,
@@ -12,9 +18,28 @@ import NavOption from '../components/NavOption';
 import { useUser } from '../hooks/useUser';
 import { signOut } from 'firebase/auth';
 import { auth } from '../lib/firebase';
+import NotLoggedIn from '../router/routes/NotLoggedIn';
+import Loadingpage from '../router/routes/Loadingpage';
+
+function RouteGuard() {
+  const location = useLocation();
+  const { user, loading } = useUser();
+
+  // input all your restricted routes
+  const restrictedRoutes: string[] = ['/', '/history', '/statistics'];
+
+  if (loading) {
+    return <Loadingpage />;
+  }
+
+  if (restrictedRoutes.includes(location.pathname) && !user) {
+    return <NotLoggedIn />;
+  }
+
+  return <Outlet />;
+}
 
 function Layout() {
-  const [state, setState] = useState('X');
   const navigate = useNavigate();
   const { user } = useUser();
 
@@ -26,7 +51,7 @@ function Layout() {
   return (
     <div className='flex h-screen w-screen'>
       <nav className='flex flex-col justify-between'>
-        <div className='p-3 md:p-6'>x</div>
+        <div className='p-3 md:p-6'></div>
         <div className='flex flex-col space-y-6 md:space-y-12'>
           <NavOption
             to={'/'}
@@ -63,7 +88,7 @@ function Layout() {
         </div>
       </nav>
       <main className='w-full bg-neutral-extralight'>
-        <Outlet />
+        <RouteGuard />
       </main>
     </div>
   );

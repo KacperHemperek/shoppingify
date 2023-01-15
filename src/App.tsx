@@ -9,6 +9,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <UserContextProvider>
+        
         <RouterProvider router={router} />
       </UserContextProvider>
     </QueryClientProvider>
