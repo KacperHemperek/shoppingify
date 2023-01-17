@@ -2,12 +2,14 @@ import { useForm } from 'react-hook-form';
 import { SiGithub, SiGoogle } from 'react-icons/si';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import FormSubmitButton from './FormSubmitButton';
 import useLoginWithGoogle from '../hooks/useLoginWithGoogle';
 import useLoginWithGithub from '../hooks/useLoginWithGithub';
 import useSignUp from '../hooks/useSignUp';
 import { useNavigate } from 'react-router-dom';
+import { formatFireabseAuthError } from '../helpers/firebaseError';
+import { FirebaseError } from 'firebase/app';
+import ErrorAlert from './ErrorAlert';
 
 interface RegisterFormInputs {
   name: string;
@@ -39,7 +41,12 @@ function RegisterFormContent() {
 
   const { mutate: signInWithGoogle } = useLoginWithGoogle();
   const { mutate: signInWithGithub } = useLoginWithGithub();
-  const { mutateAsync: signUp, isLoading: loading } = useSignUp();
+  const {
+    mutateAsync: signUp,
+    isLoading: loading,
+    error,
+    isError,
+  } = useSignUp();
 
   const onSubmit = async (data: RegisterFormInputs) => {
     try {
@@ -55,6 +62,9 @@ function RegisterFormContent() {
       className='flex w-full flex-col space-y-6'
       onSubmit={handleSubmit(onSubmit)}
     >
+      {isError && error instanceof FirebaseError && (
+        <ErrorAlert text={formatFireabseAuthError(error)} />
+      )}
       <label htmlFor='email' className='label'>
         Email
         <span className='mb-2'></span>
