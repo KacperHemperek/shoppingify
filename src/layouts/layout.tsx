@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  Navigate,
   Outlet,
   useHref,
   useLocation,
@@ -20,6 +21,7 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../lib/firebase';
 import NotLoggedIn from '../router/routes/NotLoggedIn';
 import Loadingpage from '../router/routes/Loadingpage';
+import Login from '../router/routes/Login';
 
 function RouteGuard() {
   const location = useLocation();
@@ -87,7 +89,7 @@ function Layout() {
           </button>
         </div>
       </nav>
-      <main className='w-full bg-neutral-extralight'>
+      <main className='h-full w-full overflow-y-scroll  bg-neutral-extralight'>
         <RouteGuard />
       </main>
     </div>

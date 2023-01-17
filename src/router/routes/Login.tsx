@@ -40,7 +40,7 @@ function Login() {
         animate={formType}
         initial={formType}
         layout
-        className='mx-auto flex w-full max-w-sm flex-col items-center space-y-6 overflow-hidden rounded-xl bg-white p-8 shadow-primary/30 md:border md:border-primary md:shadow-lg'
+        className='mx-auto flex w-full max-w-sm flex-col items-center space-y-6 overflow-hidden  rounded-xl bg-neutral-extralight p-8 shadow-primary/30 md:border md:border-primary md:bg-white md:shadow-lg'
       >
         <motion.div
           layout={'position'}

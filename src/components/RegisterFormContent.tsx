@@ -7,6 +7,7 @@ import FormSubmitButton from './FormSubmitButton';
 import useLoginWithGoogle from '../hooks/useLoginWithGoogle';
 import useLoginWithGithub from '../hooks/useLoginWithGithub';
 import useSignUp from '../hooks/useSignUp';
+import { useNavigate } from 'react-router-dom';
 
 interface RegisterFormInputs {
   name: string;
@@ -34,6 +35,8 @@ function RegisterFormContent() {
     formState: { isValid },
   } = useForm<RegisterFormInputs>({ resolver: zodResolver(schema) });
 
+  const navigate = useNavigate();
+
   const { mutate: signInWithGoogle } = useLoginWithGoogle();
   const { mutate: signInWithGithub } = useLoginWithGithub();
   const { mutateAsync: signUp, isLoading: loading } = useSignUp();
@@ -41,7 +44,7 @@ function RegisterFormContent() {
   const onSubmit = async (data: RegisterFormInputs) => {
     try {
       await signUp(data);
-      alert('Sign Up Success');
+      navigate('/');
     } catch (err) {
       console.error(err);
     }
