@@ -1,12 +1,4 @@
-import { useState } from 'react';
-import {
-  Navigate,
-  Outlet,
-  useHref,
-  useLocation,
-  useMatches,
-  useNavigate,
-} from 'react-router-dom';
+import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   ShoppingCartIcon,
   ArrowPathIcon,
@@ -21,7 +13,6 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../lib/firebase';
 import NotLoggedIn from '../router/routes/NotLoggedIn';
 import Loadingpage from '../router/routes/Loadingpage';
-import Login from '../router/routes/Login';
 
 function RouteGuard() {
   const location = useLocation();
@@ -29,6 +20,8 @@ function RouteGuard() {
 
   // input all your restricted routes
   const restrictedRoutes: string[] = ['/', '/history', '/statistics'];
+  // input all routes that are not avalible to logged in user
+  const redirectFromRoutesWhenUserLoggedIn: string[] = ['/login'];
 
   if (loading) {
     return <Loadingpage />;
@@ -38,6 +31,10 @@ function RouteGuard() {
     return <NotLoggedIn />;
   }
 
+  if (redirectFromRoutesWhenUserLoggedIn.includes(location.pathname) && user) {
+    console.log(location.pathname);
+    return <Navigate to='/' />;
+  }
   return <Outlet />;
 }
 

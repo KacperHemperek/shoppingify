@@ -18,7 +18,11 @@ function NotLoggedIn() {
           Login
         </button>
       </div>
-      <img className='w-80' src={HeroImage} alt='not logged in hero image' />
+      <img
+        className='w-80 p-8 md:p-0'
+        src={HeroImage}
+        alt='not logged in hero image'
+      />
     </div>
   );
 }
