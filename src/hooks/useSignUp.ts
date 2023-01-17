@@ -12,14 +12,9 @@ function useSignUp() {
     password: string;
     name: string;
   }) => {
-    try {
-      const cred = await createUserWithEmailAndPassword(auth, email, password);
-      await updateProfile(cred.user, { displayName: name });
-      console.log({ cred });
-    } catch (err: any) {
-      console.error(err);
-      throw new Error(err.code);
-    }
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    await updateProfile(cred.user, { displayName: name });
+    console.log({ cred });
   };
 
   return useMutation({ mutationFn: signUp });
