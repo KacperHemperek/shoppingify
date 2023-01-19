@@ -32,7 +32,8 @@ function RouteGuard() {
   }
 
   if (redirectFromRoutesWhenUserLoggedIn.includes(location.pathname) && user) {
-    console.log(location.pathname);
+    console.log(user, location.pathname);
+
     return <Navigate to='/' />;
   }
   return <Outlet />;
@@ -42,8 +43,8 @@ function Layout() {
   const navigate = useNavigate();
   const { user } = useUser();
 
-  const logout = () => {
-    signOut(auth);
+  const logout = async () => {
+    await signOut(auth);
     navigate('/login');
   };
 

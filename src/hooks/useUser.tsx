@@ -28,13 +28,15 @@ export const UserContextProvider = ({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
     const unsubscribe = auth.onAuthStateChanged(
       (user) => {
+        setLoading(true);
         setUser(user);
+        setError(null);
         setLoading(false);
       },
       (error) => {
+        setLoading(true);
         console.error(error.message);
         setError(error.message);
         setLoading(false);

@@ -44,7 +44,7 @@ function LoginFormContent() {
   };
 
   return (
-    <div
+    <form
       className='flex w-full flex-col space-y-6'
       onSubmit={handleSubmit(onSubmit)}
     >
@@ -90,7 +90,7 @@ function LoginFormContent() {
           Google
         </button>
       </div>
-    </div>
+    </form>
   );
 }
 
