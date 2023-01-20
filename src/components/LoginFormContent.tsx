@@ -10,6 +10,7 @@ import useLoginWithGithub from '../hooks/useLoginWithGithub';
 import useLoginWithGoogle from '../hooks/useLoginWithGoogle';
 import ErrorAlert from './ErrorAlert';
 import FormSubmitButton from './FormSubmitButton';
+import { motion } from 'framer-motion';
 
 type LoginFormInput = {
   email: string;
@@ -44,53 +45,56 @@ function LoginFormContent() {
   };
 
   return (
-    <form
-      className='flex w-full flex-col space-y-6'
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      {isError && error instanceof FirebaseError && (
-        <ErrorAlert text={formatFireabseAuthError(error)} />
-      )}
-
-      <label htmlFor='email' className='label'>
-        <span className='mb-2'>Email</span>
-        <input
-          type='text'
-          className=' rounded-xl border-2 border-neutral-light p-4 outline-2 outline-primary transition-all placeholder:text-sm placeholder:text-neutral-light focus:placeholder:text-primary'
-          placeholder={'Enter an email'}
-          {...register('email')}
+    <>
+      <motion.form
+        layout
+        className='flex w-full flex-col space-y-6'
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <ErrorAlert
+          text={formatFireabseAuthError(error as FirebaseError)}
+          visible={isError && error instanceof FirebaseError}
         />
-      </label>
-      <label htmlFor='email' className='label mb-4'>
-        <span className='mb-2'>Password</span>
-        <input
-          type='password'
-          className='w-full rounded-xl border-2 border-neutral-light p-4 outline-2 outline-primary transition-all placeholder:text-sm placeholder:text-neutral-light focus:placeholder:text-primary'
-          placeholder={'Enter a password'}
-          {...register('password')}
+        <label htmlFor='email' className='label'>
+          <span className='mb-2'>Email</span>
+          <input
+            type='text'
+            className=' rounded-xl border-2 border-neutral-light p-4 outline-2 outline-primary transition-all placeholder:text-sm placeholder:text-neutral-light focus:placeholder:text-primary'
+            placeholder={'Enter an email'}
+            {...register('email')}
+          />
+        </label>
+        <label htmlFor='email' className='label mb-4'>
+          <span className='mb-2'>Password</span>
+          <input
+            type='password'
+            className='w-full rounded-xl border-2 border-neutral-light p-4 outline-2 outline-primary transition-all placeholder:text-sm placeholder:text-neutral-light focus:placeholder:text-primary'
+            placeholder={'Enter a password'}
+            {...register('password')}
+          />
+        </label>
+        <FormSubmitButton
+          buttonText='Login'
+          isValid={isValid}
+          loading={loading}
         />
-      </label>
-      <FormSubmitButton
-        buttonText='Login'
-        isValid={isValid}
-        loading={loading}
-      />
-      <div className='flex w-full justify-evenly space-x-6'>
-        <button
-          className='flex w-full items-center justify-center rounded-xl bg-[#171515] p-4 font-semibold text-white transition-all hover:scale-[101%] hover:shadow-md hover:shadow-[#171515]/30'
-          onClick={() => loginWithGithub()}
-        >
-          <SiGithub className='mr-2' /> Github
-        </button>
-        <button
-          className='hover:[#4c8bf5]/30 flex w-full items-center justify-center rounded-xl bg-[#4c8bf5] p-4 font-semibold text-white transition-all hover:scale-[101%] hover:shadow-md'
-          onClick={() => loginWithGoogle()}
-        >
-          <SiGoogle className='mr-2' />
-          Google
-        </button>
-      </div>
-    </form>
+        <div className='flex w-full justify-evenly space-x-6'>
+          <button
+            className='flex w-full items-center justify-center rounded-xl bg-[#171515] p-4 font-semibold text-white transition-all hover:scale-[101%] hover:shadow-md hover:shadow-[#171515]/30'
+            onClick={() => loginWithGithub()}
+          >
+            <SiGithub className='mr-2' /> Github
+          </button>
+          <button
+            className='hover:[#4c8bf5]/30 flex w-full items-center justify-center rounded-xl bg-[#4c8bf5] p-4 font-semibold text-white transition-all hover:scale-[101%] hover:shadow-md'
+            onClick={() => loginWithGoogle()}
+          >
+            <SiGoogle className='mr-2' />
+            Google
+          </button>
+        </div>
+      </motion.form>
+    </>
   );
 }
 

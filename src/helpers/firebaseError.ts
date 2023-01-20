@@ -8,13 +8,15 @@ const AUTH_ERRORS = {
   'auth/user-not-found': 'User does not exist',
   'auth/name-not-provided': 'User name is not provided',
   'auth/passwords-not-match': 'Passwords must match',
-  unknown_error: 'Unknown authentication error',
+  unknown_error: 'Unknown error',
 };
 
 const ErrorStrings = Object.keys(AUTH_ERRORS);
 type AuthErrorKeys = keyof typeof AUTH_ERRORS;
 
-export const formatFireabseAuthError = (err: FirebaseError): string => {
+export const formatFireabseAuthError = (err?: FirebaseError): string => {
+  if (!err) return AUTH_ERRORS.unknown_error;
+
   const isFirebaseErrorCode = (x: string): x is AuthErrorKeys =>
     ErrorStrings.includes(x);
 
