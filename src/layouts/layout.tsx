@@ -13,6 +13,7 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../lib/firebase';
 import NotLoggedIn from '../router/routes/NotLoggedIn';
 import Loadingpage from '../router/routes/Loadingpage';
+import Logo from '../assets/logo.svg';
 
 function RouteGuard() {
   const location = useLocation();
@@ -51,7 +52,9 @@ function Layout() {
   return (
     <div className='flex h-screen w-screen'>
       <nav className='flex flex-col justify-between'>
-        <div className='p-3 md:p-6'></div>
+        <div className='flex items-center justify-center p-3 md:p-6'>
+          <img src={Logo} alt='Website Logo' />
+        </div>
         <div className='flex flex-col space-y-6 md:space-y-12'>
           <NavOption
             to={'/'}
@@ -87,7 +90,7 @@ function Layout() {
           </button>
         </div>
       </nav>
-      <main className='h-full w-full overflow-y-scroll  bg-neutral-extralight'>
+      <main className='h-screen w-screen overflow-y-scroll bg-neutral-extralight'>
         <RouteGuard />
       </main>
     </div>
