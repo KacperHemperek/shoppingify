@@ -62,9 +62,11 @@ function RegisterFormContent() {
       className='flex w-full flex-col space-y-6'
       onSubmit={handleSubmit(onSubmit)}
     >
-      {isError && error instanceof FirebaseError && (
-        <ErrorAlert text={formatFireabseAuthError(error)} />
-      )}
+      <ErrorAlert
+        visible={isError && error instanceof FirebaseError}
+        text={formatFireabseAuthError(error as FirebaseError)}
+      />
+
       <label htmlFor='email' className='label'>
         Email
         <span className='mb-2'></span>

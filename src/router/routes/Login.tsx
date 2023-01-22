@@ -1,5 +1,5 @@
 import { motion, AnimatePresence, AnimationProps } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useMeasure from 'react-use-measure';
 import LoginFormContent from '../../components/LoginFormContent';
 import RegisterFormContent from '../../components/RegisterFormContent';
@@ -51,10 +51,7 @@ function Login() {
         initial={formType}
         className='mx-auto flex w-full max-w-sm flex-col items-center space-y-6 overflow-hidden  rounded-xl bg-neutral-extralight p-8 shadow-primary/30 md:border md:border-primary md:bg-white md:shadow-lg'
       >
-        <motion.div
-          layout={'position'}
-          className='relative flex w-full justify-evenly space-x-1 overflow-hidden rounded-xl border-2 border-primary bg-primary-light p-1'
-        >
+        <motion.div className='relative flex w-full justify-evenly space-x-1 overflow-hidden rounded-xl border-2 border-primary bg-primary-light p-1'>
           <div
             className={`${
               isLogin ? 'text-white' : 'text-primary'
@@ -80,7 +77,12 @@ function Login() {
         </motion.div>
         <motion.div
           animate={{ height: bounds.height > 0 ? bounds.height : 'auto' }}
-          className='w-full'
+          transition={{
+            type: 'spring',
+            bounce: 0.1,
+            duration: 0.25,
+          }}
+          className=' w-full'
         >
           <div ref={ref}>
             <AnimatePresence mode={'wait'} initial={false}>
