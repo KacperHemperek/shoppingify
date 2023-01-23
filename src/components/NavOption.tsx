@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
 
 function NavOption({ icon, to }: { to: string; icon: React.ReactNode }) {
+
   return (
     <NavLink to={to} className='flex h-14 items-center'>
       {({ isActive }: { isActive: boolean }) =>
