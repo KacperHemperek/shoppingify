@@ -12,7 +12,13 @@ function Homepage() {
     },
     {
       name: 'Category 2',
-      items: ['item 1', 'item 2', 'item 3', 'item 4', 'item 5'],
+      items: [
+        'item 1',
+        'item 2',
+        'item 3',
+        'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde, exercitationem!',
+        'item 5',
+      ],
     },
     {
       name: 'Category 3',
