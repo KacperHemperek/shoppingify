@@ -9,7 +9,6 @@ function useCategories(id: string = 'GANJYVI3JF0Zi8HZM3X0') {
     try {
       const snapshot = await getDocs(collection(db, `users/${id}/categories`));
       snapshot.forEach((doc: any) => {
-        console.log(doc.data());
         result.push(doc.data());
       });
     } catch (error) {
