@@ -1,34 +1,20 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import CategoriesList from '../../components/CategoriesList';
+import useCategories from '../../hooks/useCategories';
 import { useUser } from '../../hooks/useUser';
+import Loadingpage from './Loadingpage';
 
 function Homepage() {
   const { user } = useUser();
+  const { data, isLoading, error } = useCategories(user?.uid);
 
-  const mockData = [
-    {
-      name: 'Category 1',
-      items: ['item 1', 'item 2', 'item 3', 'item 4', 'item 5'],
-    },
-    {
-      name: 'Category 2',
-      items: [
-        'item 1',
-        'item 2',
-        'item 3',
-        'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde, exercitationem!',
-        'item 5',
-      ],
-    },
-    {
-      name: 'Category 3',
-      items: ['item 1', 'item 2', 'item 3', 'item 4', 'item 5'],
-    },
-    {
-      name: 'Category 4',
-      items: ['item 1', 'item 2', 'item 3', 'item 4', 'item 5'],
-    },
-  ];
+  if (error) {
+    return <div>Error occured</div>;
+  }
+
+  if (isLoading) {
+    return <Loadingpage />;
+  }
 
   return (
     <div className='flex  flex-col px-3 py-8 md:px-20'>
@@ -47,7 +33,7 @@ function Homepage() {
         </div>
       </header>
       <div className='flex w-full flex-col'>
-        <CategoriesList categories={mockData} />
+        <CategoriesList categories={data} />
       </div>
     </div>
   );
