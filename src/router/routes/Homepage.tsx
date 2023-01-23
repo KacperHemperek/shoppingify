@@ -19,7 +19,7 @@ function filterCategories(
       if (category.items.filter((item) => item.match(reg)).length) {
         return true;
       }
-    }) 
+    })
     .map(({ items, name }) => {
       return {
         name,
@@ -49,9 +49,9 @@ function Homepage() {
   }
 
   return (
-    <div className='flex  flex-col px-3 py-8 md:px-20'>
+    <div className='flex flex-col px-3 py-8 md:px-6 lg:px-20'>
       <header className='mb-8 flex w-full flex-col space-y-4 lg:flex-row lg:justify-between lg:space-x-4 lg:space-y-0'>
-        <h1 className='text-xl font-medium text-neutral-dark lg:text-4xl'>
+        <h1 className='text-xl font-medium text-neutral-dark lg:text-2xl xl:text-4xl'>
           <span className='text-primary '>Shoppingify</span> allows you take
           your shopping list wherever you go
         </h1>

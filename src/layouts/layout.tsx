@@ -14,6 +14,7 @@ import { auth } from '../lib/firebase';
 import NotLoggedIn from '../router/routes/NotLoggedIn';
 import Loadingpage from '../router/routes/Loadingpage';
 import Logo from '../assets/logo.svg';
+import { useState } from 'react';
 
 function RouteGuard() {
   const location = useLocation();
@@ -43,6 +44,7 @@ function RouteGuard() {
 function Layout() {
   const navigate = useNavigate();
   const { user } = useUser();
+  const [showSidebar, setShowSidebar] = useState(false);
 
   const logout = async () => {
     await signOut(auth);
@@ -52,7 +54,7 @@ function Layout() {
   return (
     <div className='flex h-screen w-screen'>
       <nav className='flex flex-col justify-between'>
-        <div className='flex items-center justify-center p-3 md:p-6'>
+        <div className='flex items-center justify-center p-3 lg:p-6'>
           <img src={Logo} alt='Website Logo' />
         </div>
         <div className='flex flex-col space-y-6 md:space-y-12'>
@@ -84,15 +86,16 @@ function Layout() {
             />
           )}
         </div>
-        <div className='flex flex-col p-3 md:p-6'>
+        <div className='flex flex-col p-3 lg:p-6'>
           <button className='rounded-full bg-primary p-3'>
             <ShoppingCartIcon className='h-6 w-6 text-white' />
           </button>
         </div>
       </nav>
-      <main className='h-screen w-screen overflow-y-scroll bg-neutral-extralight'>
+      <main className='scrollbar flex h-screen w-full overflow-y-auto bg-neutral-extralight'>
         <RouteGuard />
       </main>
+      <div className='fixed h-screen w-full bg-neutral-extralight md:relative md:w-96 lg:w-[450px] '></div>
     </div>
   );
 }
