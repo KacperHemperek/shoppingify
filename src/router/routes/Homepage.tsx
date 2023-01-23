@@ -19,7 +19,7 @@ function filterCategories(
       if (category.items.filter((item) => item.match(reg)).length) {
         return true;
       }
-    })
+    }) 
     .map(({ items, name }) => {
       return {
         name,

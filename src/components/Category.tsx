@@ -1,11 +1,18 @@
-import React from 'react';
 import { CategoryType } from '../types/Category.interface';
 import ItemCard from './ItemCard';
 import { motion } from 'framer-motion';
 
 function Category({ items, name }: CategoryType) {
   return (
-    <div className=' mb-12'>
+    <motion.div
+      layout={'position'}
+      transition={{
+        layout: {
+          delay: 0.4,
+        },
+      }}
+      className=' mb-12'
+    >
       <motion.h2
         initial={{ y: 10, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -22,7 +29,7 @@ function Category({ items, name }: CategoryType) {
           <ItemCard item={item} delay={i * 0.2 + 0.6} key={item} />
         ))}
       </motion.div>
-    </div>
+    </motion.div>
   );
 }
 

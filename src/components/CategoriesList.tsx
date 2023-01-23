@@ -1,6 +1,7 @@
 import React from 'react';
 import { CategoryType } from '../types/Category.interface';
 import Category from './Category';
+import { motion } from 'framer-motion';
 
 function CategoriesList({ categories }: { categories?: CategoryType[] }) {
   if (!categories || !categories?.length) {
@@ -8,11 +9,18 @@ function CategoriesList({ categories }: { categories?: CategoryType[] }) {
   }
 
   return (
-    <div>
+    <motion.div
+      layout={'size'}
+      transition={{
+        layout: {
+          delay: 0.5,
+        },
+      }}
+    >
       {categories.map((category) => (
         <Category key={category.name} {...category} />
       ))}
-    </div>
+    </motion.div>
   );
 }
 
