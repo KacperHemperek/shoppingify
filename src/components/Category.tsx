@@ -1,6 +1,6 @@
 import { CategoryType } from '../types/Category.interface';
 import ItemCard from './ItemCard';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 function Category({ items, name }: CategoryType) {
   return (
@@ -25,9 +25,11 @@ function Category({ items, name }: CategoryType) {
         transition={{ delayChildren: 0.3 }}
         className='grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
       >
-        {items.map((item, i) => (
-          <ItemCard item={item} delay={i * 0.2 + 0.6} key={item} />
-        ))}
+        <AnimatePresence mode='popLayout'>
+          {items.map((item, i) => (
+            <ItemCard item={item} delay={i * 0.2 + 0.6} key={item} />
+          ))}
+        </AnimatePresence>
       </motion.div>
     </motion.div>
   );
