@@ -23,7 +23,7 @@ function Category({ items, name }: CategoryType) {
       </motion.h2>
       <motion.div
         transition={{ delayChildren: 0.3 }}
-        className='grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+        className='grid gap-6 md:grid-cols-2 xl:grid-cols-3  2xl:grid-cols-4'
       >
         <AnimatePresence mode='popLayout'>
           {items.map((item, i) => (
