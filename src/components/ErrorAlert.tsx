@@ -1,21 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { XCircleIcon } from '@heroicons/react/24/outline';
 
-const variants = {
-  initial: {
-    opacity: 0,
-    height: 0,
-  },
-  animate: {
-    opacity: 1,
-    height: 'auto',
-  },
-  exit: {
-    opacity: 0,
-    height: 0,
-  },
-};
-
 function ErrorAlert({ text, visible }: { text: string; visible: boolean }) {
   return (
     <AnimatePresence mode='popLayout'>
