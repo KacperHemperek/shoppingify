@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import React from 'react';
 import useItemInfoContext from '../hooks/useItemInfoContext';
+import ItemInfo from './ItemInfo';
 
 const x = '100%';
 
@@ -17,7 +18,7 @@ const variants = {
 };
 
 function DesktopSideBar({ showAddItem }: { showAddItem: boolean }) {
-  const { isShown: isItemInfoShown, hide } = useItemInfoContext();
+  const { isShown: isItemInfoShown, hide, item } = useItemInfoContext();
 
   return (
     <div className='hidden overflow-hidden md:block'>
@@ -37,11 +38,7 @@ function DesktopSideBar({ showAddItem }: { showAddItem: boolean }) {
           ) : (
             <div className='-z-10 h-full bg-primary-light'>Cart</div>
           )}
-          {isItemInfoShown && (
-            <div className='absolute top-0 left-0 h-screen w-full max-w-md  bg-white'>
-              Info
-            </div>
-          )}
+          {isItemInfoShown && item && <ItemInfo item={item} />}
         </motion.div>
       </AnimatePresence>
     </div>

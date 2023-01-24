@@ -1,4 +1,3 @@
-import React from 'react';
 import { CategoryType } from '../types/Category.interface';
 import Category from './Category';
 import { motion } from 'framer-motion';

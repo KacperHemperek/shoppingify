@@ -2,14 +2,28 @@ import { useQuery } from '@tanstack/react-query';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { CategoryType } from '../types/Category.interface';
+import { Item } from '../types/Item.interface';
 
-function useCategories(id: string) {
-  const getCategories = async (id: string) => {
+function useCategories(id?: string) {
+  const getCategories = async (id?: string) => {
     const result: CategoryType[] = [];
+    if (!id) {
+      return result;
+    }
+
     try {
       const snapshot = await getDocs(collection(db, `users/${id}/categories`));
       snapshot.forEach((doc: any) => {
-        result.push(doc.data());
+        const data = doc.data();
+        result.push({
+          name: data.name,
+          items: data.items.map(
+            (item: { name: string; desc: string; img: string }): Item => ({
+              ...item,
+              category: data.name,
+            })
+          ),
+        });
       });
     } catch (error) {
       console.error(error);

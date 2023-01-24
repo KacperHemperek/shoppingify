@@ -2,9 +2,10 @@ import { PlusIcon } from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
 import React from 'react';
 import useItemInfoContext from '../hooks/useItemInfoContext';
+import { Item } from '../types/Item.interface';
 
 const ItemCard = React.forwardRef(
-  ({ item, delay = 0.6 }: { item: string; delay?: number }, ref) => {
+  ({ item, delay = 0.6 }: { item: Item; delay?: number }, ref) => {
     //TODO: fix props to accept item of type Item instead of string
     const { show } = useItemInfoContext();
 
@@ -22,7 +23,7 @@ const ItemCard = React.forwardRef(
         layout={'position'}
         className='flex h-min items-center justify-between space-x-4 rounded-xl bg-white p-5  shadow-md'
       >
-        <span className='font-medium'>{item}</span>
+        <span className='font-medium'>{item.name}</span>
         <div>
           <PlusIcon className='h-6 w-6 text-neutral' />
         </div>

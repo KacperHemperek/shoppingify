@@ -16,14 +16,14 @@ function filterCategories(
   const reg = new RegExp(query, 'gi');
   const result = data
     .filter((category) => {
-      if (category.items.filter((item) => item.match(reg)).length) {
+      if (category.items.filter((item) => item.name.match(reg)).length) {
         return true;
       }
     })
     .map(({ items, name }) => {
       return {
         name,
-        items: items.filter((item) => item.match(reg)),
+        items: items.filter((item) => item.name.match(reg)),
       };
     });
 

@@ -27,7 +27,7 @@ function Category({ items, name }: CategoryType) {
       >
         <AnimatePresence mode='popLayout'>
           {items.map((item, i) => (
-            <ItemCard item={item} delay={i * 0.2 + 0.6} key={item} />
+            <ItemCard item={item} delay={i * 0.2 + 0.6} key={item.name ?? i} />
           ))}
         </AnimatePresence>
       </motion.div>
