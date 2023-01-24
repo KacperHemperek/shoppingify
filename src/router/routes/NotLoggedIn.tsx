@@ -5,8 +5,8 @@ function NotLoggedIn() {
   const navigate = useNavigate();
 
   return (
-    <div className='flex h-full flex-col items-center justify-center bg-neutral-extralight lg:flex-row'>
-      <div className='space-y-6 p-8'>
+    <div className='flex h-full w-full flex-col items-center justify-center bg-neutral-extralight lg:flex-row'>
+      <div className=' space-y-6 p-8'>
         <h1 className='text-4xl font-bold  md:text-6xl'>Sorry</h1>
         <p className='md:text-lg '>You must be logged in to see that page</p>
 

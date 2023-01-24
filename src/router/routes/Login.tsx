@@ -45,7 +45,7 @@ function Login() {
   };
 
   return (
-    <div className='flex min-h-screen flex-col justify-center bg-neutral-extralight  '>
+    <div className='flex min-h-screen w-full flex-col justify-center bg-neutral-extralight '>
       <motion.div
         animate={formType}
         initial={formType}

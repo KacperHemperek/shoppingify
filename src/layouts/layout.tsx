@@ -1,4 +1,10 @@
-import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import {
+  Navigate,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useRoutes,
+} from 'react-router-dom';
 import {
   ShoppingCartIcon,
   ArrowPathIcon,
@@ -15,6 +21,8 @@ import NotLoggedIn from '../router/routes/NotLoggedIn';
 import Loadingpage from '../router/routes/Loadingpage';
 import Logo from '../assets/logo.svg';
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import DesktopSideBar from '../components/SideBar';
 
 function RouteGuard() {
   const location = useLocation();
@@ -46,14 +54,16 @@ function Layout() {
   const { user } = useUser();
   const [showSidebar, setShowSidebar] = useState(false);
 
+  const _ = useRoutes;
+
   const logout = async () => {
     await signOut(auth);
     navigate('/login');
   };
 
   return (
-    <div className='flex h-screen w-screen'>
-      <nav className='flex flex-col justify-between'>
+    <div className='flex h-screen w-screen bg-neutral-extralight'>
+      <nav className='flex flex-col justify-between bg-white'>
         <div className='flex items-center justify-center p-3 lg:p-6'>
           <img src={Logo} alt='Website Logo' />
         </div>
@@ -87,7 +97,10 @@ function Layout() {
           )}
         </div>
         <div className='flex flex-col p-3 lg:p-6'>
-          <button className='rounded-full bg-primary p-3'>
+          <button
+            className='rounded-full bg-primary p-3'
+            onClick={() => setShowSidebar((prev) => !prev)}
+          >
             <ShoppingCartIcon className='h-6 w-6 text-white' />
           </button>
         </div>
@@ -95,7 +108,7 @@ function Layout() {
       <main className='scrollbar flex h-screen w-full overflow-y-auto bg-neutral-extralight'>
         <RouteGuard />
       </main>
-      <div className='fixed h-screen w-full bg-neutral-extralight md:relative md:w-96 lg:w-[450px] '></div>
+      {user && <DesktopSideBar showAddItem={showSidebar} />}
     </div>
   );
 }
