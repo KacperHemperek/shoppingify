@@ -3,7 +3,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { CategoryType } from '../types/Category.interface';
 
-function useCategories(id: string = 'GANJYVI3JF0Zi8HZM3X0') {
+function useCategories(id: string) {
   const getCategories = async (id: string) => {
     const result: CategoryType[] = [];
     try {
