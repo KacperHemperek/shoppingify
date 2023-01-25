@@ -6,7 +6,9 @@ function ItemInfo({ item }: { item: Item }) {
 
   return (
     <div className='absolute top-0 left-0 flex h-screen w-full max-w-md flex-col  bg-white'>
-      <button onClick={hide}>back</button>
+      <button className='w-fit  font-semibold text-primary' onClick={hide}>
+        &#8592; back
+      </button>
       <div>{item.name}</div>
       <div>{item.category}</div>
       <div>{item.desc}</div>
