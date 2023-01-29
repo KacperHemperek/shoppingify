@@ -6,7 +6,6 @@ import { Item } from '../types/Item.interface';
 
 const ItemCard = React.forwardRef(
   ({ item, delay = 0.6 }: { item: Item; delay?: number }, ref) => {
-    //TODO: fix props to accept item of type Item instead of string
     const { show } = useItemInfoContext();
 
     return (

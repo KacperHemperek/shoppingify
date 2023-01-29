@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import React from 'react';
 import useItemInfoContext from '../hooks/useItemInfoContext';
+import AddItem from './AddItem';
 import ItemInfo from './ItemInfo';
 
 const x = '100%';
@@ -27,7 +27,7 @@ function DesktopSideBar({ showAddItem }: { showAddItem: boolean }) {
     : 'cart';
 
   return (
-    <div className='hidden overflow-hidden md:block'>
+    <div className='hidden overflow-hidden md:block md:w-96 lg:w-full lg:max-w-sm'>
       <AnimatePresence initial={false} mode='wait'>
         <motion.div
           variants={variants}
@@ -35,14 +35,11 @@ function DesktopSideBar({ showAddItem }: { showAddItem: boolean }) {
           initial={'enter'}
           exit={'exit'}
           key={keyForAnimation}
-          custom={showAddItem ? -1 : 1}
           transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
-          className='fixed h-screen  w-full bg-neutral-extralight md:relative md:w-96 md:max-w-sm'
+          className='h-screen  bg-neutral-extralight md:relative '
         >
           {showAddItem ? (
-            <div className='-z-10 h-full bg-white' key='addItem'>
-              Add item form
-            </div>
+            <AddItem />
           ) : (
             <div className='-z-10 h-full bg-primary-light' key={'cart'}>
               Cart
