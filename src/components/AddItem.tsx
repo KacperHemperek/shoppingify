@@ -12,12 +12,24 @@ function AddItem() {
   ];
 
   return (
-    <div className='flex '>
-      <DropDown
-        options={mockOptions}
-        value={dropdownValue}
-        onChange={setDropdownValue}
-      />
+    <div className='flex flex-col p-8'>
+      <label htmlFor='email' className='label mb-6'>
+        <span className='mb-2'>Name</span>
+        <input
+          type='text'
+          className=' rounded-xl border-2 border-neutral-light p-4 outline-2 outline-primary transition-all placeholder:text-sm placeholder:text-neutral-light focus:placeholder:text-primary'
+          placeholder={'Enter an name'}
+        />
+      </label>
+      <label className='label mb-6'>
+        <span className='mb-2'>Category</span>
+        <DropDown
+          placeholder='Enter a category'
+          options={mockOptions}
+          value={dropdownValue}
+          onChange={setDropdownValue}
+        />
+      </label>
     </div>
   );
 }
