@@ -12,24 +12,36 @@ function AddItem() {
   ];
 
   return (
-    <div className='flex flex-col p-8'>
-      <label htmlFor='email' className='label mb-6'>
-        <span className='mb-2'>Name</span>
-        <input
-          type='text'
-          className=' rounded-xl border-2 border-neutral-light p-4 outline-2 outline-primary transition-all placeholder:text-sm placeholder:text-neutral-light focus:placeholder:text-primary'
-          placeholder={'Enter an name'}
-        />
-      </label>
-      <label className='label mb-6'>
-        <span className='mb-2'>Category</span>
-        <DropDown
-          placeholder='Enter a category'
-          options={mockOptions}
-          value={dropdownValue}
-          onChange={setDropdownValue}
-        />
-      </label>
+    <div className='flex h-full flex-col items-center justify-between p-8'>
+      <div className='flex w-full flex-col'>
+        <h1 className='mb-10 text-2xl font-medium'>Add a new item</h1>
+        <label htmlFor='email' className='label mb-6'>
+          <span className='mb-2'>Name</span>
+          <input
+            type='text'
+            className=' rounded-xl border-2 border-neutral-light p-4 outline-2 outline-primary transition-all placeholder:text-sm placeholder:text-neutral-light focus:placeholder:text-primary'
+            placeholder={'Enter an name'}
+          />
+        </label>
+        <label htmlFor='email' className='label mb-6'>
+          <span className='mb-2'>Note</span>
+          <textarea
+            rows={3}
+            className=' resize-none rounded-xl border-2 border-neutral-light p-4 outline-2 outline-primary transition-all placeholder:text-sm placeholder:text-neutral-light focus:placeholder:text-primary'
+            placeholder={'Enter an note'}
+          />
+        </label>
+        <label className='label mb-6'>
+          <span className='mb-2'>Category</span>
+          <DropDown
+            placeholder='Enter a category'
+            options={mockOptions}
+            value={dropdownValue}
+            onChange={setDropdownValue}
+          />
+        </label>
+      </div>
+      <div> lala</div>
     </div>
   );
 }
