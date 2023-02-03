@@ -27,7 +27,7 @@ function DesktopSideBar({ showAddItem }: { showAddItem: boolean }) {
     : 'cart';
 
   return (
-    <div className='hidden overflow-hidden p-4 md:block md:w-96 lg:w-full lg:max-w-sm'>
+    <div className='hidden overflow-hidden md:block md:w-96 lg:w-full lg:max-w-sm'>
       <AnimatePresence initial={false} mode='wait'>
         <motion.div
           variants={variants}
