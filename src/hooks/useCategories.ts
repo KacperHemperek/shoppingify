@@ -18,7 +18,7 @@ function useCategories(id?: string) {
         result.push({
           name: data.name,
           items: data.items.map(
-            (item: { name: string; desc: string; img: string }): Item => ({
+            (item: { name: string; desc: string }): Item => ({
               ...item,
               category: data.name,
             })

@@ -12,9 +12,6 @@ function ItemInfo({ item }: { item: Item }) {
       <div>{item.name}</div>
       <div>{item.category}</div>
       <div>{item.desc}</div>
-      <div className='relative'>
-        <img src={item.img} alt={item.name} className='object-cover' />
-      </div>
     </div>
   );
 }
