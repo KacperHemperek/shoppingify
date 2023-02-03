@@ -21,7 +21,7 @@ const ItemCard = React.forwardRef(
         }}
         exit={{ opacity: 0, y: -10 }}
         layout={'position'}
-        className='flex h-min items-center justify-between space-x-4 rounded-xl bg-white p-5  shadow-md'
+        className='flex h-min items-center justify-between space-x-4 rounded-xl bg-white p-5 shadow-md'
       >
         <span className='font-medium'>{item.name}</span>
         <button

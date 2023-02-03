@@ -89,7 +89,7 @@ function DropDown({
 
   const preventArrowEventsOnInput = (e: KeyboardEvent) => {
     if (e.code === 'ArrowUp' || e.code === 'ArrowDown' || e.code === 'Enter') {
-      // e.preventDefault();
+      e.preventDefault();
     } else {
       setCurrentlyChosen(null);
     }
@@ -119,7 +119,7 @@ function DropDown({
     };
   }, [currentlyChosen, dropdownRef.current?.hidden, filteredOptions]);
   return (
-    <div className='relative flex w-full flex-col'>
+    <div className='relative flex w-full flex-col '>
       <input
         onChange={(e) => onChange(e.target.value)}
         ref={inputRef}
@@ -130,15 +130,17 @@ function DropDown({
       />
       {filteredOptions.length ? (
         <div
-          className='absolute top-full h-52 w-full  translate-y-3 border border-red-500'
+          className='absolute top-full w-full translate-y-3 rounded-xl bg-white p-2 shadow-lg '
           ref={dropdownRef}
           hidden={!showDropdown}
         >
           {filteredOptions.map((option) => (
             <div
               key={option.value + option.id}
-              className={`transition ${
-                option.id === currentlyChosen && 'bg-slate-200'
+              className={`rounded-lg p-4 transition ${
+                option.id === currentlyChosen
+                  ? 'bg-slate-100 font-medium'
+                  : 'text-neutral'
               }`}
               onClick={() => {
                 onChange(option.value);

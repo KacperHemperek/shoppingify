@@ -18,7 +18,7 @@ const variants = {
 };
 
 function DesktopSideBar({ showAddItem }: { showAddItem: boolean }) {
-  const { isShown: isItemInfoShown, hide, item } = useItemInfoContext();
+  const { isShown: isItemInfoShown, item } = useItemInfoContext();
 
   const keyForAnimation = isItemInfoShown
     ? 'itemInfo'
@@ -27,7 +27,7 @@ function DesktopSideBar({ showAddItem }: { showAddItem: boolean }) {
     : 'cart';
 
   return (
-    <div className='hidden overflow-hidden md:block md:w-96 lg:w-full lg:max-w-sm'>
+    <div className='hidden overflow-hidden p-4 md:block md:w-96 lg:w-full lg:max-w-sm'>
       <AnimatePresence initial={false} mode='wait'>
         <motion.div
           variants={variants}
