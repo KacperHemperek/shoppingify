@@ -33,10 +33,10 @@ function DropDown({
 
   const filteredOptions = useMemo<DropdownType[]>(() => {
     if (!value) {
-      return options.slice(0, 2);
+      return options.slice(0, 4);
     }
     const regex = new RegExp(value, 'gi');
-    return options.filter((option) => option.value.match(regex)).slice(0, 2);
+    return options.filter((option) => option.value.match(regex)).slice(0, 4);
   }, [value]);
   const [currentlyChosen, setCurrentlyChosen] = useState<string | null>(null);
 

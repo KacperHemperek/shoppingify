@@ -1,12 +1,13 @@
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
-import React from 'react';
+import React, { useState } from 'react';
 import useItemInfoContext from '../hooks/useItemInfoContext';
 import { Item } from '../types/Item.interface';
 
 const ItemCard = React.forwardRef(
   ({ item, delay = 0.6 }: { item: Item; delay?: number }, ref) => {
     const { show } = useItemInfoContext();
+    const [hover, setHover] = useState(false);
 
     return (
       <motion.div
@@ -23,9 +24,25 @@ const ItemCard = React.forwardRef(
         className='flex h-min items-center justify-between space-x-4 rounded-xl bg-white p-5  shadow-md'
       >
         <span className='font-medium'>{item.name}</span>
-        <div>
+        <button
+          className='relative p-1'
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+        >
+          <motion.div
+            className='absolute inset-0 -z-10  bg-slate-100'
+            variants={{
+              showed: {
+                clipPath: 'circle(50%)',
+              },
+              hidden: {
+                clipPath: 'circle(0%)',
+              },
+            }}
+            animate={hover ? 'showed' : 'hidden'}
+          />
           <PlusIcon className='h-6 w-6 text-neutral' />
-        </div>
+        </button>
       </motion.div>
     );
   }
