@@ -9,6 +9,11 @@ const ItemCard = React.forwardRef(
     const { show } = useItemInfoContext();
     const [hover, setHover] = useState(false);
 
+    const addItemToList = (e: React.MouseEvent) => {
+      e.stopPropagation();
+      console.log('add item ' + item.name);
+    };
+
     return (
       <motion.div
         onClick={() => show(item as any)}
@@ -28,12 +33,13 @@ const ItemCard = React.forwardRef(
           className='relative p-1'
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
+          onClick={addItemToList}
         >
           <motion.div
             className='absolute inset-0 -z-10  bg-slate-100'
             variants={{
               showed: {
-                clipPath: 'circle(50%)',
+                clipPath: 'circle(48%)',
               },
               hidden: {
                 clipPath: 'circle(0%)',
