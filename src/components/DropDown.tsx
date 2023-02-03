@@ -46,7 +46,6 @@ function DropDown({
   const handleKeyUp = (event: KeyboardEvent) => {
     if (event.code === 'ArrowUp') {
       if (!currentlyChosen) {
-        console.log({ filteredOptions });
         setCurrentlyChosen(filteredOptions[filteredOptions.length - 1].id);
         return;
       }
@@ -63,7 +62,6 @@ function DropDown({
     }
     if (event.code === 'ArrowDown') {
       if (!currentlyChosen) {
-        console.log({ filteredOptions });
         setCurrentlyChosen(filteredOptions[0].id);
         return;
       }

@@ -42,8 +42,6 @@ function RouteGuard() {
   }
 
   if (redirectFromRoutesWhenUserLoggedIn.includes(location.pathname) && user) {
-    console.log(user, location.pathname);
-
     return <Navigate to='/' />;
   }
   return <Outlet />;

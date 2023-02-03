@@ -14,7 +14,6 @@ function useSignUp() {
   }) => {
     const cred = await createUserWithEmailAndPassword(auth, email, password);
     await updateProfile(cred.user, { displayName: name });
-    console.log({ cred });
   };
 
   return useMutation({ mutationFn: signUp });
