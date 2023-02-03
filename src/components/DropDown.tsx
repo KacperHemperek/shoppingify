@@ -1,6 +1,5 @@
 import React, {
   SetStateAction,
-  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -13,14 +12,18 @@ type DropdownType = {
   value: string;
 };
 //TODO: dont move cursor when clicking arrows and focused on input
+
+//FIXME: when tabbing to other field dropdown doesn't close (can't use onBlur becuase then you can'y choose an item)
 function DropDown({
   options,
   value,
   onChange,
+  placeholder,
 }: {
   options: DropdownType[];
   onChange: React.Dispatch<SetStateAction<string>>;
   value?: string;
+  placeholder?: string;
 }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -33,10 +36,10 @@ function DropDown({
 
   const filteredOptions = useMemo<DropdownType[]>(() => {
     if (!value) {
-      return options.slice(0, 4);
+      return options.slice(0, 3);
     }
     const regex = new RegExp(value, 'gi');
-    return options.filter((option) => option.value.match(regex)).slice(0, 4);
+    return options.filter((option) => option.value.match(regex)).slice(0, 3);
   }, [value]);
   const [currentlyChosen, setCurrentlyChosen] = useState<string | null>(null);
 
@@ -125,6 +128,7 @@ function DropDown({
         ref={inputRef}
         value={value}
         type='text'
+        placeholder={placeholder}
         className='input'
         onFocus={() => setShowDropdown(true)}
       />
@@ -137,9 +141,9 @@ function DropDown({
           {filteredOptions.map((option) => (
             <div
               key={option.value + option.id}
-              className={`rounded-lg p-4 transition ${
+              className={`rounded-lg p-4 font-medium transition ${
                 option.id === currentlyChosen
-                  ? 'bg-slate-100 font-medium'
+                  ? 'bg-slate-100 text-black'
                   : 'text-neutral'
               }`}
               onClick={() => {
