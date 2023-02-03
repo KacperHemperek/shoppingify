@@ -42,7 +42,9 @@ function AddItem() {
         </label>
       </div>
       <div className='flex space-x-6'>
-        <button className='rounded-xl px-6 py-4 font-medium '>Cancel</button>
+        <button className='rounded-xl px-6 py-4 font-medium transition hover:bg-danger hover:text-white'>
+          Cancel
+        </button>
         <button className='rounded-xl bg-primary px-6 py-4 font-medium text-white transition hover:bg-primary/80'>
           Save
         </button>
