@@ -1,40 +1,51 @@
 import { useQuery } from '@tanstack/react-query';
-import { collection, getDocs } from 'firebase/firestore';
+import {
+  collection,
+  doc,
+  DocumentData,
+  DocumentReference,
+  getDocs,
+  query,
+  where,
+} from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { CategoryType } from '../types/Category.interface';
-import { Item } from '../types/Item.interface';
 
-function useCategories(id?: string) {
-  const getCategories = async (id?: string) => {
+function useCategories(userId?: string) {
+  const getCategories = async (userId?: string): Promise<CategoryType[]> => {
     const result: CategoryType[] = [];
-    if (!id) {
+    if (!userId) {
       return result;
     }
 
     try {
-      const snapshot = await getDocs(collection(db, `users/${id}/categories`));
-      snapshot.forEach((doc: any) => {
-        const data = doc.data();
+      const userRef = doc(collection(db, `users`), userId);
+      const q = query(
+        collection(db, 'categories'),
+        where('user_ref', '==', userRef)
+      );
+
+      const categoriesSnapshot = await getDocs(q);
+      categoriesSnapshot.forEach(async (doc) => {
+        const docData = doc.data();
+
         result.push({
-          name: data.name,
-          items: data.items.map(
-            (item: { name: string; desc: string }): Item => ({
-              ...item,
-              category: data.name,
-            })
-          ),
+          name: docData.name,
+          items: docData.items.map((item: { name: string; desc: string }) => ({
+            ...item,
+            category: docData.name,
+          })),
         });
       });
     } catch (error) {
       console.error(error);
     }
-
     return result;
   };
 
   return useQuery({
-    queryFn: () => getCategories(id),
-    queryKey: ['categories', id],
+    queryFn: async () => getCategories(userId),
+    queryKey: ['categories', userId],
   });
 }
 

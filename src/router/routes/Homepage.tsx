@@ -13,10 +13,16 @@ function filterCategories(
   if (!data) {
     return [];
   }
+
   const reg = new RegExp(query, 'gi');
+
   const result = data
     .filter((category) => {
-      if (category.items.filter((item) => item.name.match(reg)).length) {
+      const length = category.items.filter((item) => {
+        return item.name.match(reg);
+      }).length;
+
+      if (length) {
         return true;
       }
     })

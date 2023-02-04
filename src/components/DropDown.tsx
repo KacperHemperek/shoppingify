@@ -78,6 +78,7 @@ function DropDown({
     }
 
     if (event.code === 'Enter') {
+      event.preventDefault();
       onChange(
         (prev) =>
           options.find((option) => option.id === currentlyChosen)?.value ?? prev

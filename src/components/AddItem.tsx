@@ -11,6 +11,11 @@ function AddItem() {
     { id: '4', value: 'Forth Item' },
   ];
 
+  const addNewItem = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+  };
+
   return (
     <div className='flex h-full flex-col items-center justify-between p-8'>
       <div className='flex w-full flex-col'>
@@ -24,7 +29,7 @@ function AddItem() {
           />
         </label>
         <label htmlFor='email' className='label mb-6'>
-          <span className='mb-2'>Note</span>
+          <span className='mb-2'>Note (optional)</span>
           <textarea
             rows={3}
             className=' resize-none rounded-xl border-2 border-neutral-light p-4 outline-2 outline-primary transition-all placeholder:text-sm placeholder:text-neutral-light focus:placeholder:text-primary'
@@ -42,10 +47,16 @@ function AddItem() {
         </label>
       </div>
       <div className='flex space-x-6'>
-        <button className='rounded-xl px-6 py-4 font-medium transition hover:bg-danger hover:text-white'>
+        <button
+          type='button'
+          className='rounded-xl px-6 py-4 font-medium transition hover:bg-danger hover:text-white'
+        >
           Cancel
         </button>
-        <button className='rounded-xl bg-primary px-6 py-4 font-medium text-white transition hover:bg-primary/80'>
+        <button
+          onClick={addNewItem}
+          className='rounded-xl bg-primary px-6 py-4 font-medium text-white transition hover:bg-primary/80'
+        >
           Save
         </button>
       </div>
