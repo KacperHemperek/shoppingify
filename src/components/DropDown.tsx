@@ -19,11 +19,13 @@ function DropDown({
   value,
   onChange,
   placeholder,
+  disabled,
 }: {
   options: DropdownOptionType[];
   onChange: React.Dispatch<SetStateAction<string>>;
   value?: string;
   placeholder?: string;
+  disabled?: boolean;
 }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -40,7 +42,7 @@ function DropDown({
     }
     const regex = new RegExp(value, 'gi');
     return options.filter((option) => option.value.match(regex)).slice(0, 3);
-  }, [value]);
+  }, [value, options]);
   const [currentlyChosen, setCurrentlyChosen] = useState<string | null>(null);
 
   const handleKeyUp = (event: KeyboardEvent) => {
@@ -78,7 +80,6 @@ function DropDown({
     }
 
     if (event.code === 'Enter') {
-      event.preventDefault();
       onChange(
         (prev) =>
           options.find((option) => option.id === currentlyChosen)?.value ?? prev
@@ -130,6 +131,7 @@ function DropDown({
         placeholder={placeholder}
         className='input'
         onFocus={() => setShowDropdown(true)}
+        disabled={disabled}
       />
       {filteredOptions.length ? (
         <div

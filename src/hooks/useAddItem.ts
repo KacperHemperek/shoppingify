@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import { queryClient } from '../App';
-import { CategoryType } from '../types/Category.interface';
+
+
 
 type AddItemType = {
   name: string;

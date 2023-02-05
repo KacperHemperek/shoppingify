@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
+  addDoc,
   arrayUnion,
   collection,
   doc,
@@ -9,6 +10,7 @@ import {
   where,
 } from 'firebase/firestore';
 import { useRef, useState } from 'react';
+import { queryClient } from '../App';
 import { useUser } from '../hooks/useUser';
 import { db } from '../lib/firebase';
 import DropDown, { DropdownOptionType } from './DropDown';
@@ -45,15 +47,32 @@ function useDropdownOptions() {
 }
 
 function useAddItem() {
+  const { user, userRefFirebase } = useUser();
+
   return useMutation({
     mutationFn: async ({
       item,
       categoryId,
+      categoryName,
     }: {
       item: { name: string; desc: string };
       categoryId?: string;
+      categoryName?: string;
     }) => {
-      if (!categoryId) {
+      if (!categoryId && !categoryName) {
+        return;
+      }
+
+      console.log(categoryId, categoryName);
+
+      if (!categoryId && categoryName) {
+        console.log('adding');
+        await addDoc(collection(db, 'categories'), {
+          name: categoryName,
+          items: [item],
+          user_ref: userRefFirebase,
+        });
+        return;
       }
 
       const categoryRef = doc(collection(db, 'categories'), categoryId);
@@ -65,6 +84,12 @@ function useAddItem() {
         throw new Error('there was a problem adding item to db', { cause: e });
       }
     },
+    onSettled: async () => {
+      console.log('setteled');
+      await queryClient.invalidateQueries({
+        queryKey: ['categories', user?.uid],
+      });
+    },
   });
 }
 
@@ -75,7 +100,7 @@ function AddItemForm() {
   const noteRef = useRef<HTMLTextAreaElement>(null);
 
   const { data: options } = useDropdownOptions();
-  const { mutate: addItem } = useAddItem();
+  const { mutateAsync: addItem, isLoading, error } = useAddItem();
 
   const addNewItem = (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,8 +115,15 @@ function AddItemForm() {
     const categoryId = options?.find(
       (option) => option.value.toLowerCase() === dropdownValue.toLowerCase()
     )?.id;
-    console.log(categoryId, item);
-    addItem({ item, categoryId });
+
+    addItem({
+      item,
+      categoryId,
+      categoryName: dropdownValue.trim() === '' ? undefined : dropdownValue,
+    });
+    nameRef.current.value = '';
+    noteRef.current.value = '';
+    setDropdownValue('');
   };
 
   return (
@@ -105,6 +137,7 @@ function AddItemForm() {
             type='text'
             className=' rounded-xl border-2 border-neutral-light p-4 outline-2 outline-primary transition-all placeholder:text-sm placeholder:text-neutral-light focus:placeholder:text-primary'
             placeholder={'Enter an name'}
+            disabled={isLoading}
           />
         </label>
         <label htmlFor='email' className='label mb-6'>
@@ -114,17 +147,17 @@ function AddItemForm() {
             rows={3}
             className=' resize-none rounded-xl border-2 border-neutral-light p-4 outline-2 outline-primary transition-all placeholder:text-sm placeholder:text-neutral-light focus:placeholder:text-primary'
             placeholder={'Enter an note'}
+            disabled={isLoading}
           />
         </label>
-        <label className='label mb-6'>
-          <span className='mb-2'>Category</span>
-          <DropDown
-            placeholder='Enter a category'
-            options={options ?? []}
-            value={dropdownValue}
-            onChange={setDropdownValue}
-          />
-        </label>
+        <label className='label mb-2'>Category</label>
+        <DropDown
+          placeholder='Enter a category'
+          options={options ?? []}
+          value={dropdownValue}
+          onChange={setDropdownValue}
+          disabled={isLoading}
+        />
       </div>
       <div className='flex space-x-6'>
         <button
@@ -135,7 +168,9 @@ function AddItemForm() {
         </button>
         <button
           onClick={addNewItem}
-          className='rounded-xl bg-primary px-6 py-4 font-medium text-white transition hover:bg-primary/80'
+          className={`${
+            isLoading ? 'bg-primary/80' : 'bg-primary'
+          } rounded-xl px-6 py-4 font-medium text-white transition hover:bg-primary/80`}
         >
           Save
         </button>
