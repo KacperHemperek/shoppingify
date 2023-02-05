@@ -4,7 +4,7 @@ import ItemInfoContextProvider from './context/ItemInfoContext';
 import { UserContextProvider } from './context/UserContext';
 import { router } from './router/router';
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 function App() {
   return (

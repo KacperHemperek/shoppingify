@@ -1,13 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import {
-  collection,
-  doc,
-  DocumentData,
-  DocumentReference,
-  getDocs,
-  query,
-  where,
-} from 'firebase/firestore';
+import { collection, doc, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { CategoryType } from '../types/Category.interface';
 
@@ -30,6 +22,7 @@ function useCategories(userId?: string) {
         const docData = doc.data();
 
         result.push({
+          id: doc.id,
           name: docData.name,
           items: docData.items.map((item: { name: string; desc: string }) => ({
             ...item,

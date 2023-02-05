@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { useOnClickOutside } from '../hooks/useClicedOutside';
 
-type DropdownType = {
+export type DropdownOptionType = {
   id: string;
   value: string;
 };
@@ -20,7 +20,7 @@ function DropDown({
   onChange,
   placeholder,
 }: {
-  options: DropdownType[];
+  options: DropdownOptionType[];
   onChange: React.Dispatch<SetStateAction<string>>;
   value?: string;
   placeholder?: string;
@@ -34,7 +34,7 @@ function DropDown({
     setShowDropdown(false);
   });
 
-  const filteredOptions = useMemo<DropdownType[]>(() => {
+  const filteredOptions = useMemo<DropdownOptionType[]>(() => {
     if (!value) {
       return options.slice(0, 3);
     }

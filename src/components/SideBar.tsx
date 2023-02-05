@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import useItemInfoContext from '../hooks/useItemInfoContext';
-import AddItem from './AddItem';
+import AddItemForm from './AddItem';
 import ItemInfo from './ItemInfo';
 
 const x = '100%';
@@ -39,7 +39,7 @@ function DesktopSideBar({ showAddItem }: { showAddItem: boolean }) {
           className='h-screen  bg-neutral-extralight md:relative '
         >
           {showAddItem ? (
-            <AddItem />
+            <AddItemForm />
           ) : (
             <div className='-z-10 h-full bg-primary-light' key={'cart'}>
               Cart
