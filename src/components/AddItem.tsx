@@ -102,7 +102,7 @@ function AddItemForm() {
   const { data: options } = useDropdownOptions();
   const { mutateAsync: addItem, isLoading, error } = useAddItem();
 
-  const addNewItem = (e: React.FormEvent) => {
+  const addNewItem = async (e: React.FormEvent) => {
     e.preventDefault();
     //TODO: handle wrong user input
     if (!nameRef.current?.value || !noteRef.current?.value) {
@@ -116,7 +116,7 @@ function AddItemForm() {
       (option) => option.value.toLowerCase() === dropdownValue.toLowerCase()
     )?.id;
 
-    addItem({
+    await addItem({
       item,
       categoryId,
       categoryName: dropdownValue.trim() === '' ? undefined : dropdownValue,
