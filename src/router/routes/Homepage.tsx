@@ -18,16 +18,13 @@ function filterCategories(
 
   const result = data
     .filter((category) => {
-      const length = category.items.filter((item) => {
+      category.items.find((item) => {
         return item.name.match(reg);
-      }).length;
-
-      if (length) {
-        return true;
-      }
+      });
     })
-    .map(({ items, name }) => {
+    .map(({ id, items, name }) => {
       return {
+        id,
         name,
         items: items.filter((item) => item.name.match(reg)),
       };
