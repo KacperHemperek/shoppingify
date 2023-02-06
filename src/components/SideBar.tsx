@@ -13,7 +13,7 @@ const variants = {
     x: 0,
   },
   exit: {
-    x,
+    x: 0,
   },
 };
 
@@ -28,7 +28,7 @@ function DesktopSideBar({ showAddItem }: { showAddItem: boolean }) {
 
   return (
     <div className='hidden overflow-hidden md:block md:w-96 lg:w-full lg:max-w-sm'>
-      <AnimatePresence initial={false} mode='wait'>
+      <AnimatePresence initial={false} mode='popLayout'>
         <motion.div
           variants={variants}
           animate={'center'}
@@ -36,7 +36,7 @@ function DesktopSideBar({ showAddItem }: { showAddItem: boolean }) {
           exit={'exit'}
           key={keyForAnimation}
           transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
-          className='h-screen  bg-neutral-extralight md:relative '
+          className='h-screen bg-neutral-extralight md:relative '
         >
           {showAddItem ? (
             <AddItemForm />

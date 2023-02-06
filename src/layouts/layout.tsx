@@ -52,8 +52,6 @@ function Layout() {
   const { user } = useUser();
   const [showSidebar, setShowSidebar] = useState(false);
 
-  const _ = useRoutes;
-
   const logout = async () => {
     await signOut(auth);
     navigate('/login');
