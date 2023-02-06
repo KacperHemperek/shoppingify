@@ -17,18 +17,12 @@ function filterCategories(
   const reg = new RegExp(query, 'gi');
 
   const result = data
-    .filter((category) => {
-      category.items.find((item) => {
-        return item.name.match(reg);
-      });
-    })
-    .map(({ id, items, name }) => {
-      return {
-        id,
-        name,
-        items: items.filter((item) => item.name.match(reg)),
-      };
-    });
+    .filter((category) => category.items.some((item) => reg.test(item.name)))
+    .map(({ id, items, name }) => ({
+      id,
+      name,
+      items: items.filter((item) => item.name.match(reg)),
+    }));
 
   return result;
 }
