@@ -16,6 +16,7 @@ import Loadingpage from '../router/routes/Loadingpage';
 import Logo from '../assets/logo.svg';
 import React, { createContext, useContext, useState } from 'react';
 import DesktopSideBar from '../components/SideBar';
+import NavBar from '../components/NavBar';
 
 function RouteGuard() {
   const location = useLocation();
@@ -52,66 +53,19 @@ export const useSidebarContext = () => {
 };
 
 function Layout() {
-  const navigate = useNavigate();
   const { user } = useUser();
   const [showSidebar, setShowSidebar] = useState(false);
 
-  const logout = async () => {
-    await signOut(auth);
-    navigate('/login');
-  };
-
   return (
-    <div className='flex h-screen w-screen bg-neutral-extralight'>
-      <nav className='flex flex-col justify-between bg-white'>
-        <div className='flex items-center justify-center p-3 lg:p-6'>
-          <img src={Logo} alt='Website Logo' />
-        </div>
-        <div className='flex flex-col space-y-6 md:space-y-12'>
-          <NavOption
-            to={'/'}
-            icon={<ListBulletIcon className='h-6 w-6 text-neutral-dark' />}
-          />
-          <NavOption
-            to={'history'}
-            icon={<ArrowPathIcon className='h-6 w-6 text-neutral-dark' />}
-          />
-          <NavOption
-            to={'statistics'}
-            icon={<ChartBarSquareIcon className='h-6 w-6 text-neutral-dark' />}
-          />
-          {user ? (
-            <button onClick={logout} className='flex h-14 items-center'>
-              <div className='h-full w-2' />
-              <div className='flex h-full w-full items-center justify-center'>
-                <ArrowLeftOnRectangleIcon className='h-6 w-6 text-neutral-dark' />
-              </div>
-            </button>
-          ) : (
-            <NavOption
-              to={'login'}
-              icon={
-                <ArrowRightOnRectangleIcon className='h-6 w-6 text-neutral-dark' />
-              }
-            />
-          )}
-        </div>
-        <div className='flex flex-col p-3 lg:p-6'>
-          <button
-            className='rounded-full bg-primary p-3'
-            onClick={() => setShowSidebar((prev) => !prev)}
-          >
-            <ShoppingCartIcon className='h-6 w-6 text-white' />
-          </button>
-        </div>
-      </nav>
-      <main className='scrollbar flex h-screen w-full overflow-y-auto bg-neutral-extralight'>
-        <RouteGuard />
-      </main>
-      <SidebarContext.Provider value={[showSidebar, setShowSidebar]}>
+    <SidebarContext.Provider value={[showSidebar, setShowSidebar]}>
+      <div className='flex h-screen w-screen bg-neutral-extralight'>
+        <NavBar />
+        <main className='scrollbar flex h-screen w-full overflow-y-auto bg-neutral-extralight'>
+          <RouteGuard />
+        </main>
         {user && <DesktopSideBar />}
-      </SidebarContext.Provider>
-    </div>
+      </div>
+    </SidebarContext.Provider>
   );
 }
 

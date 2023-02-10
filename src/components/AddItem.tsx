@@ -126,6 +126,7 @@ function AddItemForm() {
     nameRef.current.value = '';
     noteRef.current.value = '';
     setDropdownValue('');
+    setShowAddItem(false);
   };
 
   return (
