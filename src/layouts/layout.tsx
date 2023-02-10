@@ -1,10 +1,4 @@
-import {
-  Navigate,
-  Outlet,
-  useLocation,
-  useNavigate,
-  useRoutes,
-} from 'react-router-dom';
+import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   ShoppingCartIcon,
   ArrowPathIcon,
@@ -20,8 +14,7 @@ import { auth } from '../lib/firebase';
 import NotLoggedIn from '../router/routes/NotLoggedIn';
 import Loadingpage from '../router/routes/Loadingpage';
 import Logo from '../assets/logo.svg';
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { createContext, useContext, useState } from 'react';
 import DesktopSideBar from '../components/SideBar';
 
 function RouteGuard() {
@@ -46,6 +39,17 @@ function RouteGuard() {
   }
   return <Outlet />;
 }
+
+const SidebarContext = createContext<
+  [
+    showAddItem: boolean,
+    setShowAddItem: React.Dispatch<React.SetStateAction<boolean>>
+  ]
+>([false, () => {}]);
+
+export const useSidebarContext = () => {
+  return useContext(SidebarContext);
+};
 
 function Layout() {
   const navigate = useNavigate();
@@ -104,7 +108,9 @@ function Layout() {
       <main className='scrollbar flex h-screen w-full overflow-y-auto bg-neutral-extralight'>
         <RouteGuard />
       </main>
-      {user && <DesktopSideBar showAddItem={showSidebar} />}
+      <SidebarContext.Provider value={[showSidebar, setShowSidebar]}>
+        {user && <DesktopSideBar />}
+      </SidebarContext.Provider>
     </div>
   );
 }

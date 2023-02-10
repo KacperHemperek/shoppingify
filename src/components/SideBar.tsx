@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import useItemInfoContext from '../hooks/useItemInfoContext';
+import { useSidebarContext } from '../layouts/layout';
 import AddItemForm from './AddItem';
 import ItemInfo from './ItemInfo';
 
@@ -17,8 +18,10 @@ const variants = {
   },
 };
 
-function DesktopSideBar({ showAddItem }: { showAddItem: boolean }) {
+function DesktopSideBar() {
   const { isShown: isItemInfoShown, item } = useItemInfoContext();
+
+  const [showAddItem, setShowAddItem] = useSidebarContext();
 
   const keyForAnimation = isItemInfoShown
     ? 'itemInfo'

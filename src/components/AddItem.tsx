@@ -12,6 +12,7 @@ import {
 import { useRef, useState } from 'react';
 import { queryClient } from '../App';
 import { useUser } from '../hooks/useUser';
+import { useSidebarContext } from '../layouts/layout';
 import { db } from '../lib/firebase';
 import DropDown, { DropdownOptionType } from './DropDown';
 
@@ -95,6 +96,7 @@ function useAddItem() {
 
 function AddItemForm() {
   const [dropdownValue, setDropdownValue] = useState<string>('');
+  const [_, setShowAddItem] = useSidebarContext();
 
   const nameRef = useRef<HTMLInputElement>(null);
   const noteRef = useRef<HTMLTextAreaElement>(null);
@@ -163,6 +165,9 @@ function AddItemForm() {
         <button
           type='button'
           className='rounded-xl px-6 py-4 font-medium transition hover:bg-danger hover:text-white'
+          onClick={() => {
+            setShowAddItem(false);
+          }}
         >
           Cancel
         </button>
