@@ -14,7 +14,10 @@ import { queryClient } from '../App';
 import { useUser } from '../hooks/useUser';
 import { useSidebarContext } from '../layouts/layout';
 import { db } from '../lib/firebase';
-import DropDown, { DropdownOptionType } from './DropDown';
+import DropDown, {
+  DropdownOptionType,
+  DropDownWithDownshift,
+} from './DropDown';
 
 function useDropdownOptions() {
   const { userRefFirebase } = useUser();
@@ -130,7 +133,10 @@ function AddItemForm() {
   };
 
   return (
-    <div className='flex h-full flex-col items-center justify-between p-8'>
+    <form
+      onSubmit={addNewItem}
+      className='flex h-full flex-col items-center justify-between p-8'
+    >
       <div className='flex w-full flex-col'>
         <h1 className='mb-10 text-2xl font-medium'>Add a new item</h1>
         <label htmlFor='email' className='label mb-6'>
@@ -154,7 +160,14 @@ function AddItemForm() {
           />
         </label>
         <label className='label mb-2'>Category</label>
-        <DropDown
+        {/* <DropDown
+          placeholder='Enter a category'
+          options={options ?? []}
+          value={dropdownValue}
+          onChange={setDropdownValue}
+          disabled={isLoading}
+        /> */}
+        <DropDownWithDownshift
           placeholder='Enter a category'
           options={options ?? []}
           value={dropdownValue}
@@ -173,7 +186,7 @@ function AddItemForm() {
           Cancel
         </button>
         <button
-          onClick={addNewItem}
+          type='submit'
           className={`${
             isLoading ? 'bg-primary/80' : 'bg-primary'
           } rounded-xl px-6 py-4 font-medium text-white transition hover:bg-primary/80`}
@@ -181,7 +194,7 @@ function AddItemForm() {
           Save
         </button>
       </div>
-    </div>
+    </form>
   );
 }
 
