@@ -15,7 +15,7 @@ import NotLoggedIn from '../router/routes/NotLoggedIn';
 import Loadingpage from '../router/routes/Loadingpage';
 import Logo from '../assets/logo.svg';
 import React, { createContext, useContext, useState } from 'react';
-import DesktopSideBar from '../components/SideBar';
+import SideBar from '../components/SideBar';
 import NavBar from '../components/NavBar';
 
 function RouteGuard() {
@@ -63,7 +63,7 @@ function Layout() {
         <main className='scrollbar flex h-screen w-full overflow-y-auto bg-neutral-extralight'>
           <RouteGuard />
         </main>
-        {user && <DesktopSideBar />}
+        {user && <SideBar />}
       </div>
     </SidebarContext.Provider>
   );

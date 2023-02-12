@@ -18,7 +18,7 @@ import { useSidebarContext } from '../layouts/layout';
 function NavBar() {
   const { user } = useUser();
   const navigate = useNavigate();
-  const [showAddItem, setShowAddItem] = useSidebarContext();
+  const [_, setShowAddItem] = useSidebarContext();
 
   const logout = async () => {
     await signOut(auth);

@@ -135,7 +135,7 @@ function AddItemForm() {
   return (
     <form
       onSubmit={addNewItem}
-      className='flex h-full flex-col items-center justify-between p-8'
+      className='flex h-full w-full flex-col items-center justify-between p-8'
     >
       <div className='flex w-full flex-col'>
         <h1 className='mb-10 text-2xl font-medium'>Add a new item</h1>

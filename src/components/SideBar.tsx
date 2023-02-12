@@ -17,11 +17,10 @@ const variants = {
     x: 0,
   },
 };
-
 function DesktopSideBar() {
   const { isShown: isItemInfoShown, item } = useItemInfoContext();
 
-  const [showAddItem, setShowAddItem] = useSidebarContext();
+  const [showAddItem] = useSidebarContext();
 
   const keyForAnimation = isItemInfoShown
     ? 'itemInfo'
@@ -30,7 +29,7 @@ function DesktopSideBar() {
     : 'cart';
 
   return (
-    <div className='hidden overflow-hidden md:block md:w-96 lg:w-full lg:max-w-sm'>
+    <div className='fixed left-[72px] w-[calc(100%-72px)] md:static md:w-full md:max-w-[300px] xl:max-w-sm'>
       <AnimatePresence initial={false} mode='popLayout'>
         <motion.div
           variants={variants}
@@ -44,7 +43,7 @@ function DesktopSideBar() {
           {showAddItem ? (
             <AddItemForm />
           ) : (
-            <div className='-z-10 h-full bg-primary-light' key={'cart'}>
+            <div className='flex h-full bg-primary-light' key={'cart'}>
               Cart
             </div>
           )}
@@ -56,4 +55,18 @@ function DesktopSideBar() {
   );
 }
 
-export default DesktopSideBar;
+function SideBar() {
+  const { isShown: isItemInfoShown, item } = useItemInfoContext();
+
+  const [showAddItem] = useSidebarContext();
+
+  const keyForAnimation = isItemInfoShown
+    ? 'itemInfo'
+    : showAddItem
+    ? 'addItem'
+    : 'cart';
+
+  return <DesktopSideBar />;
+}
+
+export default SideBar;

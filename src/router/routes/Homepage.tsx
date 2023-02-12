@@ -46,8 +46,8 @@ function Homepage() {
   }
 
   return (
-    <div className='flex flex-col px-3 py-8 md:px-6 lg:px-20'>
-      <header className='mb-8 flex w-full flex-col space-y-4 lg:flex-row lg:justify-between lg:space-x-4 lg:space-y-0'>
+    <div className='flex flex-col px-3 py-8 md:px-6  xl:px-20'>
+      <header className='mb-8 flex w-full flex-col space-y-4 lg:justify-between xl:flex-row xl:space-x-4 xl:space-y-0'>
         <h1 className='text-xl font-medium text-neutral-dark lg:text-2xl xl:text-4xl'>
           <span className='text-primary '>Shoppingify</span> allows you take
           your shopping list wherever you go
