@@ -13,12 +13,12 @@ import Logo from '../assets/logo.svg';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../lib/firebase';
-import { useSidebarContext } from '../layouts/layout';
+import useSidebar from '../hooks/userSidebar';
 
 function NavBar() {
   const { user } = useUser();
   const navigate = useNavigate();
-  const [_, setShowAddItem] = useSidebarContext();
+  const { setSidebarOption } = useSidebar();
 
   const logout = async () => {
     await signOut(auth);
@@ -62,13 +62,13 @@ function NavBar() {
       <div className='flex flex-col p-3 lg:p-6'>
         <button
           className='mb-6 rounded-full bg-success p-3'
-          onClick={() => setShowAddItem(true)}
+          onClick={() => setSidebarOption('addItem')}
         >
           <PlusIcon className='h-6 w-6 text-white' />
         </button>
         <button
           className='rounded-full bg-primary p-3'
-          onClick={() => setShowAddItem(false)}
+          onClick={() => setSidebarOption('cart')}
         >
           <ShoppingCartIcon className='h-6 w-6 text-white' />
         </button>

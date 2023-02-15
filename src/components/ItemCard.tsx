@@ -1,12 +1,12 @@
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
 import React, { useState } from 'react';
-import useItemInfoContext from '../hooks/useItemInfoContext';
+import useSidebar from '../hooks/userSidebar';
 import { Item } from '../types/Item.interface';
 
 const ItemCard = React.forwardRef(
   ({ item, delay = 0.6 }: { item: Item; delay?: number }, ref) => {
-    const { show } = useItemInfoContext();
+    const { show } = useSidebar();
     const [hover, setHover] = useState(false);
 
     const addItemToList = (e: React.MouseEvent) => {
@@ -16,7 +16,7 @@ const ItemCard = React.forwardRef(
 
     return (
       <motion.div
-        onClick={() => show(item as any)}
+        onClick={() => show(item)}
         initial={{ y: 10, opacity: 0 }}
         animate={{ y: 0, opacity: 1, transition: { delay } }}
         transition={{
@@ -26,7 +26,7 @@ const ItemCard = React.forwardRef(
         }}
         exit={{ opacity: 0, y: -10 }}
         layout={'position'}
-        className='flex h-min items-center justify-between space-x-4 rounded-xl bg-white p-5 shadow-md'
+        className='flex h-min items-center justify-between space-x-4 rounded-xl bg-white p-5 shadow-md  hover:cursor-pointer'
       >
         <span className='font-medium'>{item.name}</span>
         <button

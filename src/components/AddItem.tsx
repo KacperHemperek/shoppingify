@@ -11,13 +11,11 @@ import {
 } from 'firebase/firestore';
 import { useRef, useState } from 'react';
 import { queryClient } from '../App';
+import useSidebar from '../hooks/userSidebar';
 import { useUser } from '../hooks/useUser';
 import { useSidebarContext } from '../layouts/layout';
 import { db } from '../lib/firebase';
-import DropDown, {
-  DropdownOptionType,
-  DropDownWithDownshift,
-} from './DropDown';
+import DropDown, { DropdownOptionType } from './DropDown';
 
 function useDropdownOptions() {
   const { userRefFirebase } = useUser();
@@ -100,6 +98,7 @@ function useAddItem() {
 function AddItemForm() {
   const [dropdownValue, setDropdownValue] = useState<string>('');
   const [_, setShowAddItem] = useSidebarContext();
+  const { setSidebarOption } = useSidebar();
 
   const nameRef = useRef<HTMLInputElement>(null);
   const noteRef = useRef<HTMLTextAreaElement>(null);
@@ -129,13 +128,13 @@ function AddItemForm() {
     nameRef.current.value = '';
     noteRef.current.value = '';
     setDropdownValue('');
-    setShowAddItem(false);
+    setShowAddItem('cart');
   };
 
   return (
     <form
       onSubmit={addNewItem}
-      className='flex h-full w-full flex-col items-center justify-between p-8'
+      className='flex h-full w-full flex-col items-center justify-between py-8 px-6 xl:px-8'
     >
       <div className='flex w-full flex-col'>
         <h1 className='mb-10 text-2xl font-medium'>Add a new item</h1>
@@ -160,14 +159,8 @@ function AddItemForm() {
           />
         </label>
         <label className='label mb-2'>Category</label>
-        {/* <DropDown
-          placeholder='Enter a category'
-          options={options ?? []}
-          value={dropdownValue}
-          onChange={setDropdownValue}
-          disabled={isLoading}
-        /> */}
-        <DropDownWithDownshift
+
+        <DropDown
           placeholder='Enter a category'
           options={options ?? []}
           value={dropdownValue}
@@ -180,7 +173,7 @@ function AddItemForm() {
           type='button'
           className='rounded-xl px-6 py-4 font-medium transition hover:bg-danger hover:text-white'
           onClick={() => {
-            setShowAddItem(false);
+            setSidebarOption('cart');
           }}
         >
           Cancel

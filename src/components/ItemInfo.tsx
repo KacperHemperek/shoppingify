@@ -1,9 +1,9 @@
-import useItemInfoContext from '../hooks/useItemInfoContext';
+import useSidebar from '../hooks/userSidebar';
 import { Item } from '../types/Item.interface';
 import { motion } from 'framer-motion';
 
 function ItemInfo({ item }: { item: Item }) {
-  const { hide } = useItemInfoContext();
+  const { hide } = useSidebar();
 
   return (
     <div className='absolute top-0 left-0 flex h-screen w-full max-w-md flex-col bg-white p-8'>

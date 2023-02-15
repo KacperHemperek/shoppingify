@@ -41,12 +41,14 @@ function RouteGuard() {
   return <Outlet />;
 }
 
+export type ShowAddItemOptions = 'itemInfo' | 'addItem' | 'cart';
+
 const SidebarContext = createContext<
   [
-    showAddItem: boolean,
-    setShowAddItem: React.Dispatch<React.SetStateAction<boolean>>
+    showAddItem: ShowAddItemOptions,
+    setShowAddItem: React.Dispatch<React.SetStateAction<ShowAddItemOptions>>
   ]
->([false, () => {}]);
+>(['cart', () => {}]);
 
 export const useSidebarContext = () => {
   return useContext(SidebarContext);
@@ -54,18 +56,16 @@ export const useSidebarContext = () => {
 
 function Layout() {
   const { user } = useUser();
-  const [showSidebar, setShowSidebar] = useState(false);
+  
 
   return (
-    <SidebarContext.Provider value={[showSidebar, setShowSidebar]}>
-      <div className='flex h-screen w-screen bg-neutral-extralight'>
-        <NavBar />
-        <main className='scrollbar flex h-screen w-full overflow-y-auto bg-neutral-extralight'>
-          <RouteGuard />
-        </main>
-        {user && <SideBar />}
-      </div>
-    </SidebarContext.Provider>
+    <div className='flex h-screen w-screen bg-neutral-extralight'>
+      <NavBar />
+      <main className='scrollbar flex h-screen w-full overflow-y-auto bg-neutral-extralight'>
+        <RouteGuard />
+      </main>
+      {user && <SideBar />}
+    </div>
   );
 }
 

@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import useItemInfoContext from '../hooks/useItemInfoContext';
-import { useSidebarContext } from '../layouts/layout';
+import { useCallback } from 'react';
+import useSidebar from '../hooks/userSidebar';
+import { ShowAddItemOptions, useSidebarContext } from '../layouts/layout';
 import AddItemForm from './AddItem';
 import ItemInfo from './ItemInfo';
 
@@ -17,16 +18,11 @@ const variants = {
     x: 0,
   },
 };
+
+//TODO: Make sidebar work on mobile (logic and styles)
+
 function DesktopSideBar() {
-  const { isShown: isItemInfoShown, item } = useItemInfoContext();
-
-  const [showAddItem] = useSidebarContext();
-
-  const keyForAnimation = isItemInfoShown
-    ? 'itemInfo'
-    : showAddItem
-    ? 'addItem'
-    : 'cart';
+  const { sidebarOption, item } = useSidebar();
 
   return (
     <div className='fixed left-[72px] w-[calc(100%-72px)] md:static md:w-full md:max-w-[300px] xl:max-w-sm'>
@@ -36,19 +32,19 @@ function DesktopSideBar() {
           animate={'center'}
           initial={'enter'}
           exit={'exit'}
-          key={keyForAnimation}
+          key={sidebarOption}
           transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
           className='h-screen bg-neutral-extralight md:relative '
         >
-          {showAddItem ? (
-            <AddItemForm />
-          ) : (
+          {sidebarOption === 'addItem' && <AddItemForm key='addItem' />}
+          {sidebarOption === 'cart' && (
             <div className='flex h-full bg-primary-light' key={'cart'}>
               Cart
             </div>
           )}
-
-          {isItemInfoShown && item && <ItemInfo item={item} key={'itemInfo'} />}
+          {sidebarOption === 'itemInfo' && item && (
+            <ItemInfo item={item} key={'itemInfo'} />
+          )}
         </motion.div>
       </AnimatePresence>
     </div>
@@ -56,16 +52,6 @@ function DesktopSideBar() {
 }
 
 function SideBar() {
-  const { isShown: isItemInfoShown, item } = useItemInfoContext();
-
-  const [showAddItem] = useSidebarContext();
-
-  const keyForAnimation = isItemInfoShown
-    ? 'itemInfo'
-    : showAddItem
-    ? 'addItem'
-    : 'cart';
-
   return <DesktopSideBar />;
 }
 
