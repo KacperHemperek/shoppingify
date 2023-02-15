@@ -1,7 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useCallback } from 'react';
 import useSidebar from '../hooks/userSidebar';
-import { ShowAddItemOptions, useSidebarContext } from '../layouts/layout';
 import AddItemForm from './AddItem';
 import ItemInfo from './ItemInfo';
 

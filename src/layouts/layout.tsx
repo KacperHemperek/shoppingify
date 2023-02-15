@@ -43,20 +43,8 @@ function RouteGuard() {
 
 export type ShowAddItemOptions = 'itemInfo' | 'addItem' | 'cart';
 
-const SidebarContext = createContext<
-  [
-    showAddItem: ShowAddItemOptions,
-    setShowAddItem: React.Dispatch<React.SetStateAction<ShowAddItemOptions>>
-  ]
->(['cart', () => {}]);
-
-export const useSidebarContext = () => {
-  return useContext(SidebarContext);
-};
-
 function Layout() {
   const { user } = useUser();
-  
 
   return (
     <div className='flex h-screen w-screen bg-neutral-extralight'>

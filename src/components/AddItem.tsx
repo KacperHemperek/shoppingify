@@ -13,7 +13,6 @@ import { useRef, useState } from 'react';
 import { queryClient } from '../App';
 import useSidebar from '../hooks/userSidebar';
 import { useUser } from '../hooks/useUser';
-import { useSidebarContext } from '../layouts/layout';
 import { db } from '../lib/firebase';
 import DropDown, { DropdownOptionType } from './DropDown';
 
@@ -97,7 +96,6 @@ function useAddItem() {
 
 function AddItemForm() {
   const [dropdownValue, setDropdownValue] = useState<string>('');
-  const [_, setShowAddItem] = useSidebarContext();
   const { setSidebarOption } = useSidebar();
 
   const nameRef = useRef<HTMLInputElement>(null);
@@ -128,7 +126,7 @@ function AddItemForm() {
     nameRef.current.value = '';
     noteRef.current.value = '';
     setDropdownValue('');
-    setShowAddItem('cart');
+    setSidebarOption('cart');
   };
 
   return (
