@@ -1,5 +1,6 @@
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
-import useSidebar from '../hooks/userSidebar';
+import useSidebar from '../hooks/useSidebar';
 import AddItemForm from './AddItem';
 import ItemInfo from './ItemInfo';
 
@@ -23,7 +24,7 @@ function DesktopSideBar() {
   const { sidebarOption, item } = useSidebar();
 
   return (
-    <div className='fixed left-[72px] w-[calc(100%-72px)] md:static md:w-full md:max-w-[300px] xl:max-w-sm'>
+    <div className='hidden w-[calc(100%-72px)] md:block md:w-full md:max-w-[300px] xl:max-w-sm'>
       <AnimatePresence initial={false} mode='popLayout'>
         <motion.div
           variants={variants}
@@ -49,8 +50,37 @@ function DesktopSideBar() {
   );
 }
 
+function MobileSideBar() {
+  const { sidebarOption, setSidebarOption, item } = useSidebar();
+
+  return (
+    <motion.div
+      key='sidebar'
+      animate={sidebarOption ? { x: 0 } : { x: '100%' }}
+      transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
+      className='fixed right-0 h-screen max-h-screen w-[calc(100vw-72px)] bg-slate-50 md:hidden'
+    >
+
+      {sidebarOption === 'addItem' && <AddItemForm key='addItem' />}
+      {sidebarOption === 'cart' && (
+        <div className='flex h-full bg-primary-light' key={'cart'}>
+          Cart
+        </div>
+      )}
+      {sidebarOption === 'itemInfo' && item && (
+        <ItemInfo item={item} key={'itemInfo'} />
+      )}
+    </motion.div>
+  );
+}
+
 function SideBar() {
-  return <DesktopSideBar />;
+  return (
+    <>
+      <DesktopSideBar />
+      <MobileSideBar />
+    </>
+  );
 }
 
 export default SideBar;

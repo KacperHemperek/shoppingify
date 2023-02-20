@@ -1,7 +1,7 @@
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
 import React, { useState } from 'react';
-import useSidebar from '../hooks/userSidebar';
+import useSidebar from '../hooks/useSidebar';
 import { Item } from '../types/Item.interface';
 
 const ItemCard = React.forwardRef(

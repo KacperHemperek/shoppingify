@@ -13,7 +13,7 @@ import Logo from '../assets/logo.svg';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../lib/firebase';
-import useSidebar from '../hooks/userSidebar';
+import useSidebar from '../hooks/useSidebar';
 
 function NavBar() {
   const { user } = useUser();

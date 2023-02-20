@@ -5,14 +5,14 @@ import { Item } from '../types/Item.interface';
 type SidebarContextType = {
   item: Item | null;
   show: (item: Item) => void;
-  hide: () => void;
+  hide: (mobile?: boolean) => void;
   sidebarOption: ShowAddItemOptions | undefined;
   setSidebarOption: React.Dispatch<
     React.SetStateAction<ShowAddItemOptions | undefined>
   >;
 };
 
-export const ItemInfoContext = React.createContext<SidebarContextType>({
+export const SidebarContext = React.createContext<SidebarContextType>({
   item: null,
   show: () => {},
   hide: () => {},
@@ -23,7 +23,7 @@ export const ItemInfoContext = React.createContext<SidebarContextType>({
 function SidebarContextProvider({ children }: PropsWithChildren) {
   const [sidebarOption, setSidebarOption] = useState<
     ShowAddItemOptions | undefined
-  >('cart');
+  >();
   const [item, setItem] = useState<Item | null>(null);
 
   const show = useCallback((item: Item) => {
@@ -31,17 +31,17 @@ function SidebarContextProvider({ children }: PropsWithChildren) {
     setSidebarOption('itemInfo');
   }, []);
 
-  const hide = () => {
+  const hide = (mobile?: boolean) => {
     setItem(null);
-    setSidebarOption('cart');
+    setSidebarOption(mobile ? undefined : 'cart');
   };
 
   return (
-    <ItemInfoContext.Provider
+    <SidebarContext.Provider
       value={{ sidebarOption, setSidebarOption, item, show, hide }}
     >
       {children}
-    </ItemInfoContext.Provider>
+    </SidebarContext.Provider>
   );
 }
 

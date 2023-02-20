@@ -47,7 +47,7 @@ function Layout() {
   const { user } = useUser();
 
   return (
-    <div className='flex h-screen w-screen bg-neutral-extralight'>
+    <div className='flex h-screen w-screen overflow-x-hidden bg-neutral-extralight'>
       <NavBar />
       <main className='scrollbar flex h-screen w-full overflow-y-auto bg-neutral-extralight'>
         <RouteGuard />

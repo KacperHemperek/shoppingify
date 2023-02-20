@@ -1,41 +1,52 @@
-import useSidebar from '../hooks/userSidebar';
+import useSidebar from '../hooks/useSidebar';
 import { Item } from '../types/Item.interface';
 import { motion } from 'framer-motion';
+
+function BackButton({ onClick }: { onClick: () => void }) {
+  return (
+    <button className='flex w-fit font-semibold text-primary' onClick={onClick}>
+      <motion.div
+        className='mr-2'
+        initial={{ x: 10, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{
+          delay: 0.2,
+          type: 'spring',
+          bounce: 0.2,
+          duration: 0.3,
+        }}
+      >
+        {' '}
+        &#8592;
+      </motion.div>
+      <motion.div
+        initial={{ x: 30, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{
+          delay: 0.3,
+          type: 'spring',
+          bounce: 0.2,
+          duration: 0.3,
+        }}
+      >
+        {' '}
+        back
+      </motion.div>
+    </button>
+  );
+}
 
 function ItemInfo({ item }: { item: Item }) {
   const { hide } = useSidebar();
 
   return (
     <div className='absolute top-0 left-0 flex h-screen w-full max-w-md flex-col bg-white p-8'>
-      <button className='flex w-fit font-semibold text-primary' onClick={hide}>
-        <motion.div
-          className='mr-2'
-          initial={{ x: 10, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{
-            delay: 0.2,
-            type: 'spring',
-            bounce: 0.2,
-            duration: 0.3,
-          }}
-        >
-          {' '}
-          &#8592;
-        </motion.div>
-        <motion.div
-          initial={{ x: 30, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{
-            delay: 0.3,
-            type: 'spring',
-            bounce: 0.2,
-            duration: 0.3,
-          }}
-        >
-          {' '}
-          back
-        </motion.div>
-      </button>
+      <div className='hidden md:block'>
+        <BackButton onClick={hide} />
+      </div>
+      <div className='md:hidden'>
+        <BackButton onClick={() => hide(true)} />
+      </div>
       <div className='my-5'>
         <motion.h3
           initial={{ x: 10, opacity: 0 }}

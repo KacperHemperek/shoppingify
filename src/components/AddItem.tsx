@@ -1,3 +1,4 @@
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   addDoc,
@@ -11,7 +12,7 @@ import {
 } from 'firebase/firestore';
 import { useRef, useState } from 'react';
 import { queryClient } from '../App';
-import useSidebar from '../hooks/userSidebar';
+import useSidebar from '../hooks/useSidebar';
 import { useUser } from '../hooks/useUser';
 import { db } from '../lib/firebase';
 import DropDown, { DropdownOptionType } from './DropDown';
@@ -134,8 +135,13 @@ function AddItemForm() {
       onSubmit={addNewItem}
       className='flex h-full w-full flex-col items-center justify-between py-8 px-6 xl:px-8'
     >
-      <div className='flex w-full flex-col'>
-        <h1 className='mb-10 text-2xl font-medium'>Add a new item</h1>
+      <div className=' flex w-full flex-col'>
+        <div className='mb-10 flex w-full items-center justify-between'>
+          <h1 className=' text-2xl font-medium'>Add a new item</h1>
+          <button onClick={() => setSidebarOption(undefined)}>
+            <XMarkIcon className='h-6 w-6 text-black' />
+          </button>
+        </div>
         <label htmlFor='email' className='label mb-6'>
           <span className='mb-2'>Name</span>
           <input
