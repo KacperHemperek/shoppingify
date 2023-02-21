@@ -38,7 +38,7 @@ function ItemInfo({ item }: { item: Item }) {
           <span className='text-lg font-medium'>{item.desc}</span>
         </div>
       </div>
-      <div className='flex space-x-6'>
+      <div className='flex space-x-6 self-center'>
         <button
           type='button'
           className='rounded-xl px-6 py-4 font-medium transition hover:bg-danger hover:text-white'
