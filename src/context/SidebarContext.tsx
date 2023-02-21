@@ -31,7 +31,7 @@ function SidebarContextProvider({ children }: PropsWithChildren) {
     setSidebarOption('itemInfo');
   }, []);
 
-  const hide = (mobile?: boolean) => {
+  const hide = (mobile: boolean = false) => {
     setItem(null);
     setSidebarOption(mobile ? undefined : 'cart');
   };

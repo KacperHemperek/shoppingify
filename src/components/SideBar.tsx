@@ -1,5 +1,6 @@
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect } from 'react';
 import useSidebar from '../hooks/useSidebar';
 import AddItemForm from './AddItem';
 import ItemInfo from './ItemInfo';
@@ -51,7 +52,7 @@ function DesktopSideBar() {
 }
 
 function MobileSideBar() {
-  const { sidebarOption, setSidebarOption, item } = useSidebar();
+  const { sidebarOption, item } = useSidebar();
 
   return (
     <motion.div
@@ -60,21 +61,40 @@ function MobileSideBar() {
       transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
       className='fixed right-0 h-screen max-h-screen w-[calc(100vw-72px)] bg-slate-50 md:hidden'
     >
-
-      {sidebarOption === 'addItem' && <AddItemForm key='addItem' />}
-      {sidebarOption === 'cart' && (
-        <div className='flex h-full bg-primary-light' key={'cart'}>
-          Cart
-        </div>
-      )}
-      {sidebarOption === 'itemInfo' && item && (
-        <ItemInfo item={item} key={'itemInfo'} />
-      )}
+      <AnimatePresence initial={false} mode='popLayout'>
+        <motion.div
+          variants={variants}
+          animate={'center'}
+          initial={'enter'}
+          exit={'exit'}
+          key={sidebarOption}
+          transition={{ type: 'spring', duration: 0.5, bounce: 0.1 }}
+          className='h-screen bg-neutral-extralight'
+        >
+          {sidebarOption === 'addItem' && <AddItemForm key='addItem' />}
+          {sidebarOption === 'cart' && (
+            <div className='flex h-full bg-primary-light' key={'cart'}>
+              Cart
+            </div>
+          )}
+          {sidebarOption === 'itemInfo' && item && (
+            <ItemInfo item={item} key={'itemInfo'} />
+          )}
+        </motion.div>
+      </AnimatePresence>
     </motion.div>
   );
 }
 
 function SideBar() {
+  const { setSidebarOption } = useSidebar();
+
+  useEffect(() => {
+    if (window.innerWidth > 768) {
+      setSidebarOption('cart');
+    }
+  }, []);
+
   return (
     <>
       <DesktopSideBar />

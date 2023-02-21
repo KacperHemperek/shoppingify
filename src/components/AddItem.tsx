@@ -138,7 +138,10 @@ function AddItemForm() {
       <div className=' flex w-full flex-col'>
         <div className='mb-10 flex w-full items-center justify-between'>
           <h1 className=' text-2xl font-medium'>Add a new item</h1>
-          <button onClick={() => setSidebarOption(undefined)}>
+          <button
+            onClick={() => setSidebarOption(undefined)}
+            className='md:hidden'
+          >
             <XMarkIcon className='h-6 w-6 text-black' />
           </button>
         </div>

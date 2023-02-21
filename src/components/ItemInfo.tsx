@@ -1,37 +1,11 @@
 import useSidebar from '../hooks/useSidebar';
 import { Item } from '../types/Item.interface';
-import { motion } from 'framer-motion';
 
 function BackButton({ onClick }: { onClick: () => void }) {
   return (
     <button className='flex w-fit font-semibold text-primary' onClick={onClick}>
-      <motion.div
-        className='mr-2'
-        initial={{ x: 10, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{
-          delay: 0.2,
-          type: 'spring',
-          bounce: 0.2,
-          duration: 0.3,
-        }}
-      >
-        {' '}
-        &#8592;
-      </motion.div>
-      <motion.div
-        initial={{ x: 30, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{
-          delay: 0.3,
-          type: 'spring',
-          bounce: 0.2,
-          duration: 0.3,
-        }}
-      >
-        {' '}
-        back
-      </motion.div>
+      <div className='mr-2'>&#8592;</div>
+      <div>back</div>
     </button>
   );
 }
@@ -40,67 +14,46 @@ function ItemInfo({ item }: { item: Item }) {
   const { hide } = useSidebar();
 
   return (
-    <div className='absolute top-0 left-0 flex h-screen w-full max-w-md flex-col bg-white p-8'>
-      <div className='hidden md:block'>
-        <BackButton onClick={hide} />
-      </div>
-      <div className='md:hidden'>
-        <BackButton onClick={() => hide(true)} />
-      </div>
-      <div className='my-5'>
-        <motion.h3
-          initial={{ x: 10, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          className='mb-2 text-xs font-medium text-neutral-light'
-        >
-          name
-        </motion.h3>
-        <motion.span
-          initial={{ x: 10, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-          className='text-2xl font-medium'
-        >
-          {item.name}
-        </motion.span>
-      </div>
-      <div className='my-5'>
-        <motion.h3
-          initial={{ x: 10, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.51 }}
-          className='mb-2 text-xs font-medium text-neutral-light'
-        >
-          category
-        </motion.h3>
-        <motion.span
-          initial={{ x: 10, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.7, duration: 0.52 }}
-          className='text-lg font-medium'
-        >
-          {item.category}
-        </motion.span>
-      </div>
-      <div className='my-5'>
-        <motion.h3
-          initial={{ x: 10, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.8, duration: 0.53 }}
-          className='mb-2 text-xs font-medium text-neutral-light'
-        >
-          note
-        </motion.h3>
+    <div className='absolute top-0 left-0 flex h-screen w-full max-w-md flex-col justify-between bg-white py-8 px-6 xl:p-8'>
+      <div className=''>
+        <div className='hidden md:block'>
+          <BackButton onClick={() => hide()} />
+        </div>
+        <div className='md:hidden'>
+          <BackButton onClick={() => hide(true)} />
+        </div>
+        <div className='my-5'>
+          <h3 className='mb-2 text-xs font-medium text-neutral-light'>name</h3>
+          <span className='text-2xl font-medium'>{item.name}</span>
+        </div>
+        <div className='my-5'>
+          <h3 className='mb-2 text-xs font-medium text-neutral-light'>
+            category
+          </h3>
+          <span className='text-lg font-medium'>{item.category}</span>
+        </div>
+        <div className='my-5'>
+          <h3 className='mb-2 text-xs font-medium text-neutral-light'>note</h3>
 
-        <motion.span
-          initial={{ x: 10, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.9, duration: 0.54 }}
-          className='text-lg font-medium'
+          <span className='text-lg font-medium'>{item.desc}</span>
+        </div>
+      </div>
+      <div className='flex space-x-6'>
+        <button
+          type='button'
+          className='rounded-xl px-6 py-4 font-medium transition hover:bg-danger hover:text-white'
+          onClick={() => {
+            // setSidebarOption('cart');
+          }}
         >
-          {item.desc}
-        </motion.span>
+          delete
+        </button>
+        <button
+          type='submit'
+          className='self-center rounded-xl bg-primary px-6 py-4 font-medium text-white transition hover:bg-primary/80'
+        >
+          Add to list
+        </button>
       </div>
     </div>
   );
