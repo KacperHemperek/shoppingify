@@ -46,7 +46,7 @@ function Homepage() {
   }
 
   return (
-    <div className='flex flex-col px-3 py-8 md:px-6  xl:px-20'>
+    <div className='flex w-full flex-col px-3 py-8 md:px-6 xl:px-20'>
       <header className='mb-8 flex w-full flex-col space-y-4 lg:justify-between xl:flex-row xl:space-x-4 xl:space-y-0'>
         <h1 className='text-xl font-medium text-neutral-dark lg:text-2xl xl:text-4xl'>
           <span className='text-primary '>Shoppingify</span> allows you take
