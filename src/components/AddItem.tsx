@@ -1,4 +1,5 @@
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   addDoc,
@@ -11,6 +12,8 @@ import {
   where,
 } from 'firebase/firestore';
 import { useRef, useState } from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
+import { z } from 'zod';
 import { queryClient } from '../App';
 import useSidebar from '../hooks/useSidebar';
 import { useUser } from '../hooks/useUser';
@@ -95,106 +98,130 @@ function useAddItem() {
   });
 }
 
+const AddItemSchema = z.object({
+  name: z.string(),
+  desc: z.string(),
+  category: z.string(),
+});
+
+export type AddItemType = z.infer<typeof AddItemSchema>;
+
 function AddItemForm() {
-  const [dropdownValue, setDropdownValue] = useState<string>('');
+  // const [dropdownValue, setDropdownValue] = useState<string>('');
   const { setSidebarOption } = useSidebar();
 
-  const nameRef = useRef<HTMLInputElement>(null);
-  const noteRef = useRef<HTMLTextAreaElement>(null);
+  const methods = useForm<AddItemType>({
+    resolver: zodResolver(AddItemSchema),
+  });
+
+  const {
+    register,
+    reset,
+    handleSubmit,
+    getValues,
+    setValue,
+    formState: { isValid },
+  } = methods;
 
   const { data: options } = useDropdownOptions();
   const { mutateAsync: addItem, isLoading, error } = useAddItem();
 
-  const addNewItem = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const addNewItem = async (data: AddItemType) => {
     //TODO: handle wrong user input
-    if (!nameRef.current?.value || !noteRef.current?.value) {
-      return;
-    }
+    // if (!nameRef.current?.value || !noteRef.current?.value) {
+    //   return;
+    // }
     const item: { name: string; desc: string } = {
-      name: nameRef.current.value,
-      desc: noteRef.current.value,
+      name: data.name,
+      desc: data.desc,
     };
     const categoryId = options?.find(
-      (option) => option.value.toLowerCase() === dropdownValue.toLowerCase()
+      (option) => option.value.toLowerCase() === data.category.toLowerCase()
     )?.id;
 
     await addItem({
       item,
       categoryId,
-      categoryName: dropdownValue.trim() === '' ? undefined : dropdownValue,
+      categoryName:
+        data.category.trim() === '' ? undefined : data.category.trim(),
     });
-    nameRef.current.value = '';
-    noteRef.current.value = '';
-    setDropdownValue('');
+    console.log(data);
+    reset();
     setSidebarOption('cart');
   };
 
   return (
-    <form
-      onSubmit={addNewItem}
-      className='flex h-full w-full flex-col items-center justify-between py-8 px-6 xl:px-8'
-    >
-      <div className=' flex w-full flex-col'>
-        <div className='mb-10 flex w-full items-center justify-between'>
-          <h1 className=' text-2xl font-medium'>Add a new item</h1>
+    <FormProvider {...methods}>
+      <form
+        onSubmit={handleSubmit(addNewItem)}
+        className='flex h-full w-full flex-col items-center justify-between py-8 px-6 xl:px-8'
+      >
+        <div className=' flex w-full flex-col'>
+          <div className='mb-10 flex w-full items-center justify-between'>
+            <h1 className=' text-2xl font-medium'>Add a new item</h1>
+            <button
+              onClick={() => setSidebarOption(undefined)}
+              className='md:hidden'
+            >
+              <XMarkIcon className='h-6 w-6 text-black' />
+            </button>
+          </div>
+          <label htmlFor='email' className='label mb-6'>
+            <span className='mb-2'>Name</span>
+            <input
+              // ref={nameRef}
+              {...register('name')}
+              type='text'
+              className=' rounded-xl border-2 border-neutral-light p-4 outline-2 outline-primary transition-all placeholder:text-sm placeholder:text-neutral-light focus:placeholder:text-primary'
+              placeholder={'Enter an name'}
+              disabled={isLoading}
+            />
+          </label>
+          <label htmlFor='email' className='label mb-6'>
+            <span className='mb-2'>Note (optional)</span>
+            <textarea
+              // ref={noteRef}
+              {...register('desc')}
+              rows={3}
+              className=' resize-none rounded-xl border-2 border-neutral-light p-4 outline-2 outline-primary transition-all placeholder:text-sm placeholder:text-neutral-light focus:placeholder:text-primary'
+              placeholder={'Enter an note'}
+              disabled={isLoading}
+            />
+          </label>
+          <label className='label mb-2'>Category</label>
+
+          <DropDown
+            placeholder='Enter a category'
+            options={options ?? []}
+            setValue={setValue}
+            inputName='category'
+            value={getValues('category')}
+            disabled={isLoading}
+          />
+        </div>
+
+        <div className='flex space-x-6'>
           <button
-            onClick={() => setSidebarOption(undefined)}
-            className='md:hidden'
+            type='button'
+            className='rounded-xl px-6 py-4 font-medium transition hover:bg-danger hover:text-white'
+            onClick={() => {
+              setSidebarOption('cart');
+            }}
           >
-            <XMarkIcon className='h-6 w-6 text-black' />
+            Cancel
+          </button>
+          <button
+            type='submit'
+            className={`${
+              isLoading ? 'bg-primary/80' : 'bg-primary'
+            } rounded-xl px-6 py-4 font-medium text-white transition hover:bg-primary/80`}
+            disabled={!isValid}
+          >
+            Save
           </button>
         </div>
-        <label htmlFor='email' className='label mb-6'>
-          <span className='mb-2'>Name</span>
-          <input
-            ref={nameRef}
-            type='text'
-            className=' rounded-xl border-2 border-neutral-light p-4 outline-2 outline-primary transition-all placeholder:text-sm placeholder:text-neutral-light focus:placeholder:text-primary'
-            placeholder={'Enter an name'}
-            disabled={isLoading}
-          />
-        </label>
-        <label htmlFor='email' className='label mb-6'>
-          <span className='mb-2'>Note (optional)</span>
-          <textarea
-            ref={noteRef}
-            rows={3}
-            className=' resize-none rounded-xl border-2 border-neutral-light p-4 outline-2 outline-primary transition-all placeholder:text-sm placeholder:text-neutral-light focus:placeholder:text-primary'
-            placeholder={'Enter an note'}
-            disabled={isLoading}
-          />
-        </label>
-        <label className='label mb-2'>Category</label>
-
-        <DropDown
-          placeholder='Enter a category'
-          options={options ?? []}
-          value={dropdownValue}
-          onChange={setDropdownValue}
-          disabled={isLoading}
-        />
-      </div>
-      <div className='flex space-x-6'>
-        <button
-          type='button'
-          className='rounded-xl px-6 py-4 font-medium transition hover:bg-danger hover:text-white'
-          onClick={() => {
-            setSidebarOption('cart');
-          }}
-        >
-          Cancel
-        </button>
-        <button
-          type='submit'
-          className={`${
-            isLoading ? 'bg-primary/80' : 'bg-primary'
-          } rounded-xl px-6 py-4 font-medium text-white transition hover:bg-primary/80`}
-        >
-          Save
-        </button>
-      </div>
-    </form>
+      </form>
+    </FormProvider>
   );
 }
 

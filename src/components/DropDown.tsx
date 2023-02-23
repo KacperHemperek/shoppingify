@@ -1,5 +1,6 @@
 import { useCombobox } from 'downshift';
-import React, { SetStateAction, useMemo } from 'react';
+import { useMemo } from 'react';
+import { UseFormSetValue } from 'react-hook-form';
 
 export type DropdownOptionType = {
   id: string;
@@ -8,16 +9,20 @@ export type DropdownOptionType = {
 const DropDown = ({
   options,
   value,
-  onChange,
   placeholder,
   disabled,
+  setValue,
+  inputName,
 }: {
   options: DropdownOptionType[];
-  onChange: React.Dispatch<SetStateAction<string>>;
-  value?: string;
+  inputName: string;
+  setValue: UseFormSetValue<any>;
+  value: string;
   placeholder?: string;
   disabled?: boolean;
 }) => {
+  // const { setValue } = useFormContext<AddItemType>();
+
   const {
     getInputProps,
     isOpen,
@@ -26,8 +31,10 @@ const DropDown = ({
     getItemProps,
   } = useCombobox({
     onInputValueChange(e) {
-      console.log(e);
-      onChange(e?.inputValue ?? '');
+      //FIXME: list doesn't update when value changes
+      setValue(inputName, e.inputValue || '');
+      console.log(e.inputValue);
+      console.log(value);
     },
     items: options,
     itemToString(item) {
