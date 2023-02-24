@@ -21,8 +21,6 @@ const DropDown = ({
   placeholder?: string;
   disabled?: boolean;
 }) => {
-  // const { setValue } = useFormContext<AddItemType>();
-
   const {
     getInputProps,
     isOpen,
@@ -31,10 +29,7 @@ const DropDown = ({
     getItemProps,
   } = useCombobox({
     onInputValueChange(e) {
-      //FIXME: list doesn't update when value changes
       setValue(inputName, e.inputValue || '');
-      console.log(e.inputValue);
-      console.log(value);
     },
     items: options,
     itemToString(item) {

@@ -118,11 +118,11 @@ function AddItemForm() {
     register,
     reset,
     handleSubmit,
-    getValues,
     setValue,
     formState: { isValid },
+    watch,
   } = methods;
-
+  const watchCategory = watch('category');
   const { data: options } = useDropdownOptions();
   const { mutateAsync: addItem, isLoading, error } = useAddItem();
 
@@ -195,7 +195,7 @@ function AddItemForm() {
             options={options ?? []}
             setValue={setValue}
             inputName='category'
-            value={getValues('category')}
+            value={watchCategory}
             disabled={isLoading}
           />
         </div>
