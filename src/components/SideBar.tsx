@@ -97,6 +97,9 @@ function SideBar() {
 
   return (
     <>
+      {/* {
+      window
+    } */}
       <DesktopSideBar />
       <MobileSideBar />
     </>

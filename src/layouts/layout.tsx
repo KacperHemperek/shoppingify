@@ -1,12 +1,4 @@
-import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import {
-  ShoppingCartIcon,
-  ArrowPathIcon,
-  ListBulletIcon,
-  ChartBarSquareIcon,
-  ArrowRightOnRectangleIcon,
-  ArrowLeftOnRectangleIcon,
-} from '@heroicons/react/24/outline';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import NavOption from '../components/NavOption';
 import { useUser } from '../hooks/useUser';
 import { signOut } from 'firebase/auth';

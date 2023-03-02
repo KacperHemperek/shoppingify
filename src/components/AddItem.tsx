@@ -11,7 +11,6 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore';
-import { useRef, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { z } from 'zod';
 import { queryClient } from '../App';
@@ -107,7 +106,6 @@ const AddItemSchema = z.object({
 export type AddItemType = z.infer<typeof AddItemSchema>;
 
 function AddItemForm() {
-  // const [dropdownValue, setDropdownValue] = useState<string>('');
   const { setSidebarOption } = useSidebar();
 
   const methods = useForm<AddItemType>({
@@ -131,6 +129,8 @@ function AddItemForm() {
     // if (!nameRef.current?.value || !noteRef.current?.value) {
     //   return;
     // }
+    console.log('submitting');
+
     const item: { name: string; desc: string } = {
       name: data.name,
       desc: data.desc,
@@ -150,6 +150,8 @@ function AddItemForm() {
     setSidebarOption('cart');
   };
 
+  console.log(watch());
+
   return (
     <FormProvider {...methods}>
       <form
@@ -160,6 +162,7 @@ function AddItemForm() {
           <div className='mb-10 flex w-full items-center justify-between'>
             <h1 className=' text-2xl font-medium'>Add a new item</h1>
             <button
+              type='button'
               onClick={() => setSidebarOption(undefined)}
               className='md:hidden'
             >
