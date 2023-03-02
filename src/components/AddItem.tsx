@@ -213,9 +213,7 @@ function AddItemForm() {
           </button>
           <button
             type='submit'
-            className={`${
-              isLoading ? 'bg-primary/80' : 'bg-primary'
-            } rounded-xl px-6 py-4 font-medium text-white transition hover:bg-primary/80`}
+            className='submit-button px-6 py-4'
             disabled={!isValid}
           >
             Save

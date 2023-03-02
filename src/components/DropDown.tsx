@@ -47,6 +47,8 @@ const DropDown = ({
     );
   }, [value, options]);
 
+  //FIXME: problems with validating and displaying save button properly (probalby ref from react-hook-form)
+
   return (
     <div className='relative flex w-full flex-col'>
       <input

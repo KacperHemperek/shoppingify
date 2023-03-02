@@ -12,7 +12,7 @@ function BackButton({ onClick }: { onClick: () => void }) {
 
 function ItemInfo({ item }: { item: Item }) {
   const { hide } = useSidebar();
-
+  //TODO: add delete item functionality on delete button
   return (
     <div className='absolute top-0 left-0 flex h-screen w-full max-w-md flex-col justify-between bg-white py-8 px-6 xl:p-8'>
       <div className=''>
