@@ -172,7 +172,6 @@ function AddItemForm() {
           <label htmlFor='email' className='label mb-6'>
             <span className='mb-2'>Name</span>
             <input
-              // ref={nameRef}
               {...register('name')}
               type='text'
               className=' rounded-xl border-2 border-neutral-light p-4 outline-2 outline-primary transition-all placeholder:text-sm placeholder:text-neutral-light focus:placeholder:text-primary'
@@ -183,7 +182,6 @@ function AddItemForm() {
           <label htmlFor='email' className='label mb-6'>
             <span className='mb-2'>Note (optional)</span>
             <textarea
-              // ref={noteRef}
               {...register('desc')}
               rows={3}
               className=' resize-none rounded-xl border-2 border-neutral-light p-4 outline-2 outline-primary transition-all placeholder:text-sm placeholder:text-neutral-light focus:placeholder:text-primary'
