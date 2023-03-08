@@ -1,6 +1,6 @@
 import { useCombobox } from 'downshift';
 import { useMemo } from 'react';
-import { UseFormSetValue } from 'react-hook-form';
+import { UseFormRegisterReturn, UseFormSetValue } from 'react-hook-form';
 
 export type DropdownOptionType = {
   id: string;
@@ -18,6 +18,7 @@ const DropDown = ({
   inputName: string;
   setValue: UseFormSetValue<any>;
   value: string;
+  register: UseFormRegisterReturn<any>;
   placeholder?: string;
   disabled?: boolean;
 }) => {

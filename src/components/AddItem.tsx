@@ -198,6 +198,7 @@ function AddItemForm() {
             inputName='category'
             value={watchCategory}
             disabled={isLoading}
+            register={register('category')}
           />
         </div>
 
