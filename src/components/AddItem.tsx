@@ -67,10 +67,7 @@ function useAddItem() {
         return;
       }
 
-      console.log(categoryId, categoryName);
-
       if (!categoryId && categoryName) {
-        console.log('adding');
         await addDoc(collection(db, 'categories'), {
           name: categoryName,
           items: [item],
@@ -89,7 +86,6 @@ function useAddItem() {
       }
     },
     onSettled: async () => {
-      console.log('setteled');
       await queryClient.invalidateQueries({
         queryKey: ['categories', user?.uid],
       });
@@ -98,13 +94,13 @@ function useAddItem() {
 }
 
 const AddItemSchema = z.object({
-  name: z.string(),
-  desc: z.string(),
-  category: z.string(),
+  name: z.string().min(1, 'Required'),
+  desc: z.string().min(1, 'Required'),
+  category: z.string().min(1, 'Required'),
 });
 
 export type AddItemType = z.infer<typeof AddItemSchema>;
-
+//FIXME: isValid not updating only on category change
 function AddItemForm() {
   const { setSidebarOption } = useSidebar();
 
@@ -120,6 +116,7 @@ function AddItemForm() {
     formState: { isValid },
     watch,
   } = methods;
+
   const watchCategory = watch('category');
   const { data: options } = useDropdownOptions();
   const { mutateAsync: addItem, isLoading, error } = useAddItem();
@@ -129,7 +126,6 @@ function AddItemForm() {
     // if (!nameRef.current?.value || !noteRef.current?.value) {
     //   return;
     // }
-    console.log('submitting');
 
     const item: { name: string; desc: string } = {
       name: data.name,
@@ -145,12 +141,10 @@ function AddItemForm() {
       categoryName:
         data.category.trim() === '' ? undefined : data.category.trim(),
     });
-    console.log(data);
+
     reset();
     setSidebarOption('cart');
   };
-
-  console.log(watch());
 
   return (
     <FormProvider {...methods}>

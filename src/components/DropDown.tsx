@@ -11,6 +11,7 @@ const DropDown = ({
   value,
   placeholder,
   disabled,
+  register,
   setValue,
   inputName,
 }: {
@@ -49,15 +50,26 @@ const DropDown = ({
   }, [value, options]);
 
   const dropdownHidden = !(isOpen && filteredOptions.length > 0);
-
-  //FIXME: problems with validating and displaying save button properly (probalby ref from react-hook-form)
+  const getInputPropsResult = getInputProps();
 
   return (
     <div className='relative flex w-full flex-col'>
       <input
         data-testid='dropdown-input'
         type='text'
-        {...getInputProps()}
+        ref={(e) => {
+          register.ref(e);
+          getInputPropsResult.ref(e);
+        }}
+        {...getInputPropsResult}
+        onChange={(e) => {
+          getInputPropsResult.onChange(e);
+          register.onChange(e);
+        }}
+        onBlur={(e) => {
+          getInputPropsResult.onBlur(e);
+          register.onChange(e);
+        }}
         className='input'
         placeholder={placeholder}
         disabled={disabled}

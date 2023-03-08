@@ -10,15 +10,11 @@ function useLogin() {
     email: string;
     password: string;
   }) => {
-    try{
-      const cred = await signInWithEmailAndPassword(auth, email, password);
-      console.log(cred);
-    
-    } catch(err: any) {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (err: any) {
       console.error(err);
-      
     }
-
   };
 
   return useMutation({

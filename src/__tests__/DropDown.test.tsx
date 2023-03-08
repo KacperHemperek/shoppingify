@@ -22,11 +22,9 @@ const TestDropdown = ({ value }: { value?: string }) => {
     },
   });
 
-  console.log(watch('category'));
-
   return (
     <DropDown
-      inputName='test'
+      inputName='category'
       options={mockOptions}
       register={register('category')}
       setValue={setValue}
