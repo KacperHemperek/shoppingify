@@ -47,6 +47,8 @@ const DropDown = ({
     );
   }, [value, options]);
 
+  const dropdownHidden = !(isOpen && filteredOptions.length > 0);
+
   //FIXME: problems with validating and displaying save button properly (probalby ref from react-hook-form)
 
   return (
@@ -59,12 +61,12 @@ const DropDown = ({
         placeholder={placeholder}
         disabled={disabled}
       />
+
       <ul
         data-testid='dropdown-list'
         {...getMenuProps()}
-        className={`${
-          !(isOpen && filteredOptions.length) && 'hidden'
-        } absolute top-full max-h-[170px] w-full translate-y-3 overflow-y-auto rounded-xl bg-white p-2 shadow-lg`}
+        className={`absolute top-full max-h-[170px] w-full translate-y-3 overflow-y-auto rounded-xl bg-white p-2 shadow-lg`}
+        hidden={dropdownHidden}
       >
         {filteredOptions.map((option, idx) => (
           <li
