@@ -52,6 +52,7 @@ const DropDown = ({
   return (
     <div className='relative flex w-full flex-col'>
       <input
+        data-testid='dropdown-input'
         type='text'
         {...getInputProps()}
         className='input'
@@ -59,6 +60,7 @@ const DropDown = ({
         disabled={disabled}
       />
       <ul
+        data-testid='dropdown-list'
         {...getMenuProps()}
         className={`${
           !(isOpen && filteredOptions.length) && 'hidden'
