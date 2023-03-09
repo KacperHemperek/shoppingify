@@ -18,7 +18,6 @@ const variants = {
   },
 };
 
-//TODO: Make sidebar work on mobile (logic and styles)
 
 function DesktopSideBar() {
   const { sidebarOption, item } = useSidebar();

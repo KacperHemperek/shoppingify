@@ -72,15 +72,14 @@ function useAddItem() {
 
       if (!categoryId && categoryName) {
         try {
-
           await addDoc(collection(db, 'categories'), {
             name: categoryName,
             items: [itemWithId],
             user_ref: userRefFirebase,
           });
           return;
-        } catch(err) {
-          throw new Error('couldn\'t create a new category')
+        } catch (err) {
+          throw new Error("couldn't create a new category");
         }
       }
 
@@ -108,6 +107,8 @@ const AddItemSchema = z.object({
 });
 
 export type AddItemType = z.infer<typeof AddItemSchema>;
+
+
 //FIXME: isValid not updating only on category change
 function AddItemForm() {
   const { setSidebarOption } = useSidebar();
@@ -130,11 +131,6 @@ function AddItemForm() {
   const { mutateAsync: addItem, isLoading, error } = useAddItem();
 
   const addNewItem = async (data: AddItemType) => {
-    //TODO: handle wrong user input
-    // if (!nameRef.current?.value || !noteRef.current?.value) {
-    //   return;
-    // }
-
     const item: { name: string; desc: string } = {
       name: data.name,
       desc: data.desc,

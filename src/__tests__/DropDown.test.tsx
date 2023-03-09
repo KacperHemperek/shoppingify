@@ -1,6 +1,4 @@
 import {
-  act,
-  fireEvent,
   render,
   screen,
   waitFor,
@@ -9,6 +7,8 @@ import '@testing-library/jest-dom';
 import DropDown, { DropdownOptionType } from '../components/DropDown';
 import { useForm } from 'react-hook-form';
 import userEvent from '@testing-library/user-event';
+
+
 
 const mockOptions: DropdownOptionType[] = [
   { id: '1', value: 'test1' },

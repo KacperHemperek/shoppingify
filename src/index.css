@@ -34,3 +34,7 @@
     @apply bg-primary/50 transition-all;
   }
 }
+
+.firebase-emulator-warning {
+  display: none;
+}
