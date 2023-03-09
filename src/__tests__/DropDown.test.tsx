@@ -15,7 +15,7 @@ const mockOptions: DropdownOptionType[] = [
   { id: '3', value: 'test3' },
 ];
 
-const TestWrapper = ({ value }: { value?: string }) => {
+const DropdownWithFormHook = ({ value }: { value?: string }) => {
   const { register, setValue, watch } = useForm<{ category: string }>({
     defaultValues: {
       category: value ?? '',
@@ -36,7 +36,7 @@ const TestWrapper = ({ value }: { value?: string }) => {
 describe('Dropdown tests', () => {
   it('should be empty and dropdown should be closed', async () => {
     await act(async () => {
-      render(<TestWrapper value='not visible dropdown' />);
+      render(<DropdownWithFormHook value='not visible dropdown' />);
     });
 
     const inputElement = screen.getByTestId('dropdown-input');
@@ -49,11 +49,16 @@ describe('Dropdown tests', () => {
   });
 
   it('should display dropdown with filtered values', async () => {
-    render(<TestWrapper />);
+    render(<DropdownWithFormHook />);
     const inputElement = screen.getByTestId('dropdown-input');
     const dropdownElement = screen.getByTestId('dropdown-list');
 
     inputElement.focus();
+    //TODO: check if list has all elements in dropdown
+    await waitFor(async () => {
+
+    })
+
     fireEvent.change(inputElement, { target: { value: 'test1' } });
 
     await waitFor(async () => {
