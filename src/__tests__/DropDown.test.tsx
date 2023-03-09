@@ -1,7 +1,6 @@
 import {
   act,
   fireEvent,
-  getByText,
   render,
   screen,
   waitFor,
