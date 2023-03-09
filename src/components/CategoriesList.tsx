@@ -1,6 +1,6 @@
-import { CategoryType } from '../types/Category.interface';
-import Category from './Category';
 import { motion } from 'framer-motion';
+import { CategoryType } from '@/types/Category.interface';
+import Category from '@/components/Category';
 
 function CategoriesList({ categories }: { categories?: CategoryType[] }) {
   if (!categories || !categories?.length) {

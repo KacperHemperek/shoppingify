@@ -1,5 +1,12 @@
-import useSidebar from '../hooks/useSidebar';
-import { Item } from '../types/Item.interface';
+import { useMutation } from '@tanstack/react-query';
+import useSidebar from '@/hooks/useSidebar';
+import { Item } from '@/types/Item.interface';
+
+const useDeleteItem = (item: Item) => {
+  const deleteItem = async (item: Item) => {};
+
+  return useMutation({ mutationFn: deleteItem });
+};
 
 function BackButton({ onClick }: { onClick: () => void }) {
   return (
@@ -43,6 +50,8 @@ function ItemInfo({ item }: { item: Item }) {
           type='button'
           className='rounded-xl px-6 py-4 font-medium transition hover:bg-danger hover:text-white'
           onClick={() => {
+            console.log('delete item ' + item.name);
+
             // setSidebarOption('cart');
           }}
         >

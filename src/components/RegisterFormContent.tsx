@@ -1,15 +1,18 @@
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { SiGithub, SiGoogle } from 'react-icons/si';
+import { FirebaseError } from 'firebase/app';
+
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import FormSubmitButton from './FormSubmitButton';
-import useLoginWithGoogle from '../hooks/useLoginWithGoogle';
-import useLoginWithGithub from '../hooks/useLoginWithGithub';
-import useSignUp from '../hooks/useSignUp';
-import { useNavigate } from 'react-router-dom';
-import { formatFireabseAuthError } from '../helpers/firebaseError';
-import { FirebaseError } from 'firebase/app';
-import ErrorAlert from './ErrorAlert';
+
+import useLoginWithGoogle from '@/hooks/useLoginWithGoogle';
+import useLoginWithGithub from '@/hooks/useLoginWithGithub';
+import useSignUp from '@/hooks/useSignUp';
+import { formatFireabseAuthError } from '@/helpers/firebaseError';
+
+import FormSubmitButton from '@/components/FormSubmitButton';
+import ErrorAlert from '@/components/ErrorAlert';
 
 interface RegisterFormInputs {
   name: string;

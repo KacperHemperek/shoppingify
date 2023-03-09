@@ -13,11 +13,11 @@ import {
 } from 'firebase/firestore';
 import { useForm, FormProvider } from 'react-hook-form';
 import { z } from 'zod';
-import { queryClient } from '../App';
-import useSidebar from '../hooks/useSidebar';
-import { useUser } from '../hooks/useUser';
-import { db } from '../lib/firebase';
-import DropDown, { DropdownOptionType } from './DropDown';
+import { queryClient } from '@/App';
+import useSidebar from '@/hooks/useSidebar';
+import { useUser } from '@/hooks/useUser';
+import { db } from '@/lib/firebase';
+import DropDown, { DropdownOptionType } from '@/components/DropDown';
 
 function useDropdownOptions() {
   const { userRefFirebase } = useUser();

@@ -1,16 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FirebaseError } from 'firebase/app';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { SiGithub, SiGoogle } from 'react-icons/si';
-import { useNavigate } from 'react-router-dom';
-import { z } from 'zod';
-import { formatFireabseAuthError } from '../helpers/firebaseError';
-import useLogin from '../hooks/useLogin';
-import useLoginWithGithub from '../hooks/useLoginWithGithub';
-import useLoginWithGoogle from '../hooks/useLoginWithGoogle';
-import ErrorAlert from './ErrorAlert';
-import FormSubmitButton from './FormSubmitButton';
 import { motion } from 'framer-motion';
+import { z } from 'zod';
+import { formatFireabseAuthError } from '@/helpers/firebaseError';
+import useLogin from '@/hooks/useLogin';
+import useLoginWithGithub from '@/hooks/useLoginWithGithub';
+import useLoginWithGoogle from '@/hooks/useLoginWithGoogle';
+import ErrorAlert from '@/components/ErrorAlert';
+import FormSubmitButton from '@/components/FormSubmitButton';
 
 type LoginFormInput = {
   email: string;

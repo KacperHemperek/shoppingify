@@ -1,5 +1,5 @@
-import { CategoryType } from '../types/Category.interface';
-import ItemCard from './ItemCard';
+import { CategoryType } from '@/types/Category.interface';
+import ItemCard from '@/components/ItemCard';
 import { AnimatePresence, motion } from 'framer-motion';
 
 function Category({ items, name }: CategoryType) {

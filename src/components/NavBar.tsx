@@ -7,13 +7,13 @@ import {
   PlusIcon,
   ShoppingCartIcon,
 } from '@heroicons/react/24/outline';
-import { useUser } from '../hooks/useUser';
-import NavOption from './NavOption';
-import Logo from '../assets/logo.svg';
+import { useUser } from '@/hooks/useUser';
+import NavOption from '@/components/NavOption';
+import Logo from '@/assets/logo.svg';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../lib/firebase';
-import useSidebar from '../hooks/useSidebar';
+import { auth } from '@/lib/firebase';
+import useSidebar from '@/hooks/useSidebar';
 
 function NavBar() {
   const { user } = useUser();
