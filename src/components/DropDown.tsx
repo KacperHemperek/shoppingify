@@ -78,7 +78,7 @@ const DropDown = ({
       <ul
         data-testid='dropdown-list'
         {...getMenuProps()}
-        className={`absolute top-full max-h-[170px] w-full translate-y-3 overflow-y-auto rounded-xl bg-white p-2 shadow-lg`}
+        className='absolute top-full max-h-[170px] w-full translate-y-3 overflow-y-auto rounded-xl bg-white p-2 shadow-lg'
         hidden={dropdownHidden}
       >
         {filteredOptions.map((option, idx) => (
