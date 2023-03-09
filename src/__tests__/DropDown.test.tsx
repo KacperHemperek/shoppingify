@@ -8,12 +8,23 @@ import {
 import '@testing-library/jest-dom';
 import DropDown, { DropdownOptionType } from '../components/DropDown';
 import { useForm } from 'react-hook-form';
+import userEvent from '@testing-library/user-event';
 
 const mockOptions: DropdownOptionType[] = [
   { id: '1', value: 'test1' },
   { id: '2', value: 'test2' },
   { id: '3', value: 'test3' },
 ];
+
+const setupTest = () => {
+  const user = userEvent.setup();
+
+  render(<DropdownWithFormHook />);
+  const inputElement = screen.getByTestId('dropdown-input');
+  const dropdownElement = screen.getByTestId('dropdown-list');
+
+  return { inputElement, dropdownElement, user };
+};
 
 const DropdownWithFormHook = ({ value }: { value?: string }) => {
   const { register, setValue, watch } = useForm<{ category: string }>({
@@ -35,9 +46,7 @@ const DropdownWithFormHook = ({ value }: { value?: string }) => {
 
 describe('Dropdown tests', () => {
   it('should be empty and dropdown should be closed', async () => {
-    await act(async () => {
-      render(<DropdownWithFormHook value='not visible dropdown' />);
-    });
+    render(<DropdownWithFormHook value='not visible dropdown' />);
 
     const inputElement = screen.getByTestId('dropdown-input');
     const dropdownElement = screen.getByTestId('dropdown-list');
@@ -49,9 +58,7 @@ describe('Dropdown tests', () => {
   });
 
   it('should display dropdown with filtered values', async () => {
-    render(<DropdownWithFormHook />);
-    const inputElement = screen.getByTestId('dropdown-input');
-    const dropdownElement = screen.getByTestId('dropdown-list');
+    const { dropdownElement, inputElement, user } = setupTest();
 
     inputElement.focus();
     await waitFor(async () => {
@@ -62,7 +69,7 @@ describe('Dropdown tests', () => {
       expect(secondAvalibleOption).toBeInTheDocument();
     });
 
-    fireEvent.change(inputElement, { target: { value: 'test1' } });
+    user.keyboard('test1');
 
     await waitFor(async () => {
       expect(dropdownElement).toBeVisible();
@@ -77,6 +84,15 @@ describe('Dropdown tests', () => {
   });
 
   it('Set value of an input with arrows', async () => {
-    
+    const { dropdownElement, inputElement, user } = setupTest();
+
+    inputElement.focus();
+
+    user.keyboard('tes[ArrowDown][ArrowDown][Enter]');
+
+    await waitFor(async () => {
+      expect((inputElement as HTMLInputElement).value).toBe('test2');
+      expect(dropdownElement).not.toBeVisible();
+    });
   });
 });
