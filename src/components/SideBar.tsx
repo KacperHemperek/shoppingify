@@ -1,4 +1,3 @@
-import { XMarkIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect } from 'react';
 import useSidebar from '../hooks/useSidebar';
@@ -43,7 +42,7 @@ function DesktopSideBar() {
             </div>
           )}
           {sidebarOption === 'itemInfo' && item && (
-            <ItemInfo item={item} key={'itemInfo'} />
+            <ItemInfo key={'itemInfo'} />
           )}
         </motion.div>
       </AnimatePresence>
@@ -52,7 +51,7 @@ function DesktopSideBar() {
 }
 
 function MobileSideBar() {
-  const { sidebarOption, item } = useSidebar();
+  const { sidebarOption, item, categoryId } = useSidebar();
 
   return (
     <motion.div
@@ -78,7 +77,7 @@ function MobileSideBar() {
             </div>
           )}
           {sidebarOption === 'itemInfo' && item && (
-            <ItemInfo item={item} key={'itemInfo'} />
+            <ItemInfo key={'itemInfo'} />
           )}
         </motion.div>
       </AnimatePresence>

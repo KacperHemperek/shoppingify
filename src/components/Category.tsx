@@ -2,7 +2,7 @@ import { CategoryType } from '@/types/Category.interface';
 import ItemCard from '@/components/ItemCard';
 import { AnimatePresence, motion } from 'framer-motion';
 
-function Category({ items, name }: CategoryType) {
+function Category({ items, name, id }: CategoryType) {
   return (
     <motion.div
       layout={'position'}
@@ -27,7 +27,12 @@ function Category({ items, name }: CategoryType) {
       >
         <AnimatePresence mode='popLayout'>
           {items.map((item, i) => (
-            <ItemCard item={item} delay={i * 0.2 + 0.6} key={item.name ?? i} />
+            <ItemCard
+              item={item}
+              categoryId={id}
+              delay={i * 0.2 + 0.6}
+              key={item.name ?? i}
+            />
           ))}
         </AnimatePresence>
       </motion.div>

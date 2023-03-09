@@ -4,7 +4,8 @@ import { Item } from '../types/Item.interface';
 
 type SidebarContextType = {
   item: Item | null;
-  show: (item: Item) => void;
+  categoryId: string | null;
+  show: (item: Item, categoryId: string) => void;
   hide: (mobile?: boolean) => void;
   sidebarOption: ShowAddItemOptions | undefined;
   setSidebarOption: React.Dispatch<
@@ -14,6 +15,7 @@ type SidebarContextType = {
 
 export const SidebarContext = React.createContext<SidebarContextType>({
   item: null,
+  categoryId: null,
   show: () => {},
   hide: () => {},
   sidebarOption: undefined,
@@ -25,9 +27,11 @@ function SidebarContextProvider({ children }: PropsWithChildren) {
     ShowAddItemOptions | undefined
   >();
   const [item, setItem] = useState<Item | null>(null);
+  const [categoryId, setCategoryId] = useState<string | null>(null);
 
-  const show = useCallback((item: Item) => {
+  const show = useCallback((item: Item, categoryId: string) => {
     setItem(item);
+    setCategoryId(categoryId);
     setSidebarOption('itemInfo');
   }, []);
 
@@ -38,7 +42,7 @@ function SidebarContextProvider({ children }: PropsWithChildren) {
 
   return (
     <SidebarContext.Provider
-      value={{ sidebarOption, setSidebarOption, item, show, hide }}
+      value={{ sidebarOption, setSidebarOption, item, show, hide, categoryId }}
     >
       {children}
     </SidebarContext.Provider>

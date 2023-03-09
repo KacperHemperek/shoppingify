@@ -1,6 +1,7 @@
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { uuidv4 } from '@firebase/util';
 import {
   addDoc,
   arrayUnion,
@@ -63,23 +64,30 @@ function useAddItem() {
       categoryId?: string;
       categoryName?: string;
     }) => {
+      const itemWithId = { id: uuidv4(), ...item };
+
       if (!categoryId && !categoryName) {
         return;
       }
 
       if (!categoryId && categoryName) {
-        await addDoc(collection(db, 'categories'), {
-          name: categoryName,
-          items: [item],
-          user_ref: userRefFirebase,
-        });
-        return;
+        try {
+
+          await addDoc(collection(db, 'categories'), {
+            name: categoryName,
+            items: [itemWithId],
+            user_ref: userRefFirebase,
+          });
+          return;
+        } catch(err) {
+          throw new Error('couldn\'t create a new category')
+        }
       }
 
       const categoryRef = doc(collection(db, 'categories'), categoryId);
       try {
         await updateDoc(categoryRef, {
-          items: arrayUnion(item),
+          items: arrayUnion(itemWithId),
         });
       } catch (e: any) {
         throw new Error('there was a problem adding item to db', { cause: e });

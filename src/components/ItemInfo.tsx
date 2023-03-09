@@ -1,11 +1,50 @@
 import { useMutation } from '@tanstack/react-query';
 import useSidebar from '@/hooks/useSidebar';
+import {
+  arrayRemove,
+  collection,
+  doc,
+  getDoc,
+  updateDoc,
+} from 'firebase/firestore';
 import { Item } from '@/types/Item.interface';
+import { db } from '@/lib/firebase';
+import { queryClient } from '@/App';
+import { useUser } from '@/hooks/useUser';
 
-const useDeleteItem = (item: Item) => {
-  const deleteItem = async (item: Item) => {};
+const useDeleteItem = () => {
+  const { user } = useUser();
 
-  return useMutation({ mutationFn: deleteItem });
+  const deleteItem = async ({
+    item,
+    categoryId,
+  }: {
+    item: Item | null;
+    categoryId: string | null;
+  }) => {
+    if (!categoryId || !item) {
+      throw new Error('No item or category provided');
+    }
+    const categoryRef = doc(collection(db, 'categories'), categoryId);
+
+    const test = await getDoc(categoryRef);
+    const itemToDelete = { id: item.id, name: item.name, desc: item.desc };
+    console.log({ itemToDelete });
+    console.log(test.data());
+
+    await updateDoc(categoryRef, {
+      items: arrayRemove(itemToDelete),
+    });
+  };
+
+  return useMutation({
+    mutationFn: deleteItem,
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['categories', user?.uid],
+      });
+    },
+  });
 };
 
 function BackButton({ onClick }: { onClick: () => void }) {
@@ -17,9 +56,12 @@ function BackButton({ onClick }: { onClick: () => void }) {
   );
 }
 
-function ItemInfo({ item }: { item: Item }) {
+function ItemInfo() {
+  const { item, categoryId, setSidebarOption } = useSidebar();
+  const { mutateAsync, isLoading } = useDeleteItem();
+
   const { hide } = useSidebar();
-  //TODO: add delete item functionality on delete button
+
   return (
     <div className='absolute top-0 left-0 flex h-screen w-full max-w-md flex-col justify-between bg-white py-8 px-6 xl:p-8'>
       <div className=''>
@@ -31,35 +73,47 @@ function ItemInfo({ item }: { item: Item }) {
         </div>
         <div className='my-5'>
           <h3 className='mb-2 text-xs font-medium text-neutral-light'>name</h3>
-          <span className='text-2xl font-medium'>{item.name}</span>
+          <span className='text-2xl font-medium'>{item?.name}</span>
         </div>
         <div className='my-5'>
           <h3 className='mb-2 text-xs font-medium text-neutral-light'>
             category
           </h3>
-          <span className='text-lg font-medium'>{item.category}</span>
+          <span className='text-lg font-medium'>{item?.category}</span>
         </div>
         <div className='my-5'>
           <h3 className='mb-2 text-xs font-medium text-neutral-light'>note</h3>
 
-          <span className='text-lg font-medium'>{item.desc}</span>
+          <span className='text-lg font-medium'>{item?.desc}</span>
         </div>
       </div>
       <div className='flex space-x-6 self-center'>
+        {/* mobile button */}
         <button
           type='button'
-          className='rounded-xl px-6 py-4 font-medium transition hover:bg-danger hover:text-white'
-          onClick={() => {
-            console.log('delete item ' + item.name);
-
-            // setSidebarOption('cart');
+          className='rounded-xl px-6 py-4 font-medium shadow-danger/30 transition hover:scale-[101%] hover:bg-danger hover:text-white hover:shadow-md md:hidden'
+          onClick={async () => {
+            await mutateAsync({ item, categoryId });
+            setSidebarOption(undefined);
+          }}
+        >
+          delete
+        </button>
+        {/* desktop button */}
+        <button
+          type='button'
+          className='hidden rounded-xl px-6 py-4 font-medium shadow-danger/30 transition hover:scale-[101%] hover:bg-danger hover:text-white hover:shadow-md md:block'
+          onClick={async () => {
+            await mutateAsync({ item, categoryId });
+            setSidebarOption('cart');
           }}
         >
           delete
         </button>
         <button
           type='submit'
-          className='self-center rounded-xl bg-primary px-6 py-4 font-medium text-white transition hover:bg-primary/80'
+          disabled={isLoading}
+          className='submit-button px-6 py-4'
         >
           Add to list
         </button>

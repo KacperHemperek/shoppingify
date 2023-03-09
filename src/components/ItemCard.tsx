@@ -5,7 +5,14 @@ import useSidebar from '@/hooks/useSidebar';
 import { Item } from '@/types/Item.interface';
 
 const ItemCard = React.forwardRef(
-  ({ item, delay = 0.6 }: { item: Item; delay?: number }, ref) => {
+  (
+    {
+      item,
+      categoryId,
+      delay = 0.6,
+    }: { item: Item; categoryId: string; delay?: number },
+    ref
+  ) => {
     const { show } = useSidebar();
     const [hover, setHover] = useState(false);
 
@@ -16,7 +23,7 @@ const ItemCard = React.forwardRef(
 
     return (
       <motion.div
-        onClick={() => show(item)}
+        onClick={() => show(item, categoryId)}
         initial={{ y: 10, opacity: 0 }}
         animate={{ y: 0, opacity: 1, transition: { delay } }}
         transition={{
