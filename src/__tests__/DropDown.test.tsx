@@ -54,10 +54,13 @@ describe('Dropdown tests', () => {
     const dropdownElement = screen.getByTestId('dropdown-list');
 
     inputElement.focus();
-    //TODO: check if list has all elements in dropdown
     await waitFor(async () => {
+      const avalibleOption = screen.queryByText('test1');
+      const secondAvalibleOption = screen.queryByText('test2');
 
-    })
+      expect(avalibleOption).toBeInTheDocument();
+      expect(secondAvalibleOption).toBeInTheDocument();
+    });
 
     fireEvent.change(inputElement, { target: { value: 'test1' } });
 
@@ -71,5 +74,9 @@ describe('Dropdown tests', () => {
       expect(avalibleOption).toBeInTheDocument();
       expect(notAvalibleOption).toBeNull();
     });
+  });
+
+  it('Set value of an input with arrows', async () => {
+    
   });
 });
