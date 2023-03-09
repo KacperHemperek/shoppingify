@@ -27,10 +27,7 @@ const useDeleteItem = () => {
     }
     const categoryRef = doc(collection(db, 'categories'), categoryId);
 
-    const test = await getDoc(categoryRef);
     const itemToDelete = { id: item.id, name: item.name, desc: item.desc };
-    console.log({ itemToDelete });
-    console.log(test.data());
 
     await updateDoc(categoryRef, {
       items: arrayRemove(itemToDelete),
