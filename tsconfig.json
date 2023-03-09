@@ -15,10 +15,12 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    
     "paths": {
       "@src": ["./src"],
       "@components": ["./src/components"],
-      "@lib": ["./src/lib"]
+      "@lib": ["./src/lib"],
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src"],
