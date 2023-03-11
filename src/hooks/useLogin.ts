@@ -1,24 +1,32 @@
+import { queryClient } from '@/App';
+import { fetchFn } from '@/utils/fetchFunction';
 import { useMutation } from '@tanstack/react-query';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../lib/firebase';
 
 function useLogin() {
-  const loginEmail = async ({
-    email,
-    password,
-  }: {
-    email: string;
-    password: string;
-  }) => {
+  const loginEmail = async (userInput: { email: string; password: string }) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const user = await fetchFn({
+        url: '/api/session',
+        body: JSON.stringify({
+          email: userInput.email,
+          password: userInput.password,
+        }),
+        method: 'POST',
+      });
+
+      return user;
     } catch (err: any) {
-      console.error(err);
+      console.error(err.message);
     }
   };
 
   return useMutation({
     mutationFn: loginEmail,
+    onSettled: (user) => {
+      console.log(user);
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+      // const userCache = queryClient.getQueriesData({ queryKey: ['user'] });
+    },
   });
 }
 

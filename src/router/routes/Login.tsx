@@ -1,3 +1,4 @@
+import { useMutation } from '@tanstack/react-query';
 import { motion, AnimatePresence, AnimationProps } from 'framer-motion';
 import { useState } from 'react';
 import useMeasure from 'react-use-measure';
@@ -31,6 +32,18 @@ const variantsPresence: AnimationProps['variants'] = {
 };
 
 function Login() {
+  const { mutate: logout } = useMutation({
+    mutationFn: async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/session`, {
+          method: 'DELETE',
+        });
+        console.log(await res.json());
+      } catch (error: any) {
+        console.error(error.message);
+      }
+    },
+  });
   const [formType, setFormType] = useState<'login' | 'register'>('login');
 
   const [ref, bounds] = useMeasure();
@@ -46,6 +59,13 @@ function Login() {
 
   return (
     <div className='flex min-h-screen w-full flex-col justify-center bg-neutral-extralight '>
+      <button
+        onClick={() => {
+          logout();
+        }}
+      >
+        Logout
+      </button>
       <motion.div
         animate={formType}
         initial={formType}
