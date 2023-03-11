@@ -1,5 +1,9 @@
 import { initializeApp } from 'firebase/app';
-import { connectAuthEmulator, getAuth } from 'firebase/auth';
+import {
+  connectAuthEmulator,
+  createUserWithEmailAndPassword,
+  getAuth,
+} from 'firebase/auth';
 import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -17,8 +21,7 @@ export const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-  connectAuthEmulator(auth, 'http://localhost:9099');
-  connectFirestoreEmulator(db, 'localhost', 9999);
-}
+export const TEST_USER_EMAIL = 'test@email.com';
+export const TEST_USER_PASS = 'Test_123';
+
 export { db, auth };
