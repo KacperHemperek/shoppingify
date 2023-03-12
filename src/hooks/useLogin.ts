@@ -1,4 +1,5 @@
 import { queryClient } from '@/App';
+import { User } from '@/context/UserContext';
 import { fetchFn } from '@/utils/fetchFunction';
 import { useMutation } from '@tanstack/react-query';
 
@@ -22,10 +23,10 @@ function useLogin() {
 
   return useMutation({
     mutationFn: loginEmail,
+
     onSettled: (user) => {
       console.log(user);
       queryClient.invalidateQueries({ queryKey: ['user'] });
-      // const userCache = queryClient.getQueriesData({ queryKey: ['user'] });
     },
   });
 }
