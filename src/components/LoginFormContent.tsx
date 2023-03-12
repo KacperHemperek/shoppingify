@@ -1,14 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FirebaseError } from 'firebase/app';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { SiGithub, SiGoogle } from 'react-icons/si';
 import { motion } from 'framer-motion';
 import { z } from 'zod';
-import { formatFireabseAuthError } from '@/helpers/firebaseError';
 import useLogin from '@/hooks/useLogin';
-import useLoginWithGithub from '@/hooks/useLoginWithGithub';
-import useLoginWithGoogle from '@/hooks/useLoginWithGoogle';
 import ErrorAlert from '@/components/ErrorAlert';
 import FormSubmitButton from '@/components/FormSubmitButton';
 
@@ -29,9 +24,12 @@ function LoginFormContent() {
     formState: { isValid },
   } = useForm<LoginFormInput>({ resolver: zodResolver(schema) });
 
-  const { mutateAsync: login, isLoading: loading, isError, error } = useLogin();
-  const { mutate: loginWithGoogle, error: googleError } = useLoginWithGoogle();
-  const { mutate: loginWithGithub, error: githubError } = useLoginWithGithub();
+  const {
+    mutateAsync: login,
+    isLoading: loading,
+    isError,
+    error: loginError,
+  } = useLogin();
 
   const navigate = useNavigate();
 
@@ -39,9 +37,7 @@ function LoginFormContent() {
     try {
       await login(data);
       navigate('/');
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   };
 
   return (
@@ -50,10 +46,7 @@ function LoginFormContent() {
         className='flex w-full flex-col '
         onSubmit={handleSubmit(onSubmit)}
       >
-        <ErrorAlert
-          text={formatFireabseAuthError(error as FirebaseError)}
-          visible={isError && error instanceof FirebaseError}
-        />
+        <ErrorAlert text={'error when logging in'} visible={isError} />
 
         <label htmlFor='email' className='label'>
           <span className='mb-2 '>Email</span>

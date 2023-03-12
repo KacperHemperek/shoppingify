@@ -1,9 +1,9 @@
-export function fetchFn(fetchInput: {
+export async function fetchFn(fetchInput: {
   url: string;
   body?: object;
   method?: 'POST' | 'DELETE' | 'GET' | 'PUT';
 }) {
-  return fetch(`${import.meta.env.VITE_API_URL}${fetchInput.url}`, {
+  const res = await fetch(`${import.meta.env.VITE_API_URL}${fetchInput.url}`, {
     method: fetchInput.method ?? 'GET',
     headers: {
       Accept: 'application/json',
@@ -11,5 +11,15 @@ export function fetchFn(fetchInput: {
     },
     credentials: 'include',
     body: JSON.stringify(fetchInput.body),
-  }).then((res) => res.json());
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    console.warn('response is not ok');
+    throw new Error(data.message);
+  }
+
+  console.log({ returning: data });
+  return data;
 }

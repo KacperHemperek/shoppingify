@@ -38,14 +38,13 @@ export const UserContextProvider = ({
         const user = await fetchFn({ url: '/api/session' });
 
         if (!user.email) {
+          console.log('no email but response ok');
           return null;
         }
 
         return { email: user.email, id: user.userId, name: user.name };
       } catch (error: any) {
-        if (error.message.toLowerCase() === 'invalid session') {
-          console.log('user not logged in');
-        }
+        console.error(error.message);
         return null;
       }
     },

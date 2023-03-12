@@ -20,14 +20,14 @@ function useSignUp() {
       });
 
       console.log(user);
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      throw new Error(error.message);
     }
   };
 
   return useMutation({
     mutationFn: signUp,
-    onSettled: async () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
   });
