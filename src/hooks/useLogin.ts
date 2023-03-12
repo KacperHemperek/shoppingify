@@ -7,10 +7,10 @@ function useLogin() {
     try {
       const user = await fetchFn({
         url: '/api/session',
-        body: JSON.stringify({
+        body: {
           email: userInput.email,
           password: userInput.password,
-        }),
+        },
         method: 'POST',
       });
 

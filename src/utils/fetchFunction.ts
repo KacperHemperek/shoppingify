@@ -1,6 +1,6 @@
 export function fetchFn(fetchInput: {
   url: string;
-  body?: string;
+  body?: object;
   method?: 'POST' | 'DELETE' | 'GET' | 'PUT';
 }) {
   return fetch(`${import.meta.env.VITE_API_URL}${fetchInput.url}`, {
@@ -10,6 +10,6 @@ export function fetchFn(fetchInput: {
       'Content-Type': 'application/json',
     },
     credentials: 'include',
-    body: fetchInput.body,
+    body: JSON.stringify(fetchInput.body),
   }).then((res) => res.json());
 }
