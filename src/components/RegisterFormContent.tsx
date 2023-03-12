@@ -105,7 +105,7 @@ function RegisterFormContent() {
         isValid={isValid}
         loading={loading}
       />
-      <div className='flex w-full justify-evenly space-x-6'>
+      {/* <div className='flex w-full justify-evenly space-x-6'>
         <button
           type='button'
           className='flex w-full items-center justify-center rounded-xl bg-[#171515] p-4 font-semibold text-white transition-all hover:scale-[101%] hover:shadow-md hover:shadow-[#171515]/30'
@@ -121,7 +121,7 @@ function RegisterFormContent() {
           <SiGoogle className='mr-2' />
           Google
         </button>
-      </div>
+      </div> */}
     </form>
   );
 }
