@@ -40,13 +40,15 @@ function LoginFormContent() {
     } catch (error) {}
   };
 
+  console.log(loginError);
+
   return (
     <>
       <motion.form
         className='flex w-full flex-col '
         onSubmit={handleSubmit(onSubmit)}
       >
-        <ErrorAlert text={'error when logging in'} visible={isError} />
+        <ErrorAlert text={(loginError as any)?.message} visible={isError} />
 
         <label htmlFor='email' className='label'>
           <span className='mb-2 '>Email</span>
