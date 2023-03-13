@@ -35,9 +35,7 @@ export const UserContextProvider = ({
   } = useQuery<User | null>({
     queryFn: async () => {
       try {
-        const user = await fetchFn({ url: '/api/session' });
-
-        return { email: user.email, id: user.userId, name: user.name };
+        return (await fetchFn({ url: '/api/session' })).data;
       } catch (error: any) {
         return null;
       }
