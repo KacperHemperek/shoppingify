@@ -38,7 +38,7 @@ const useDeleteItem = () => {
     mutationFn: deleteItem,
     onSettled: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['categories', user?.uid],
+        queryKey: ['categories', user?.id],
       });
     },
   });
