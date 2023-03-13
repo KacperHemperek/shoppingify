@@ -12,17 +12,11 @@ function useSignUp() {
     password: string;
     name: string;
   }) => {
-    try {
-      const user = await fetchFn({
-        url: '/api/session/new',
-        body: { email, name, password },
-        method: 'POST',
-      });
-
-      console.log(user);
-    } catch (error: any) {
-      throw new Error(error.message);
-    }
+    await fetchFn({
+      url: '/api/session/new',
+      body: { email, name, password },
+      method: 'POST',
+    });
   };
 
   return useMutation({

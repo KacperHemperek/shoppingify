@@ -8,7 +8,6 @@ function useLoginWithGithub() {
       const provider = new GithubAuthProvider();
       signInWithRedirect(auth, provider);
     } catch (err: any) {
-      console.error(err);
       throw new Error(err.code);
     }
   };

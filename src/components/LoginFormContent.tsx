@@ -40,8 +40,6 @@ function LoginFormContent() {
     } catch (error) {}
   };
 
-  console.log(loginError);
-
   return (
     <>
       <motion.form

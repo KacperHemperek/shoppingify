@@ -13,15 +13,11 @@ export function useLogout() {
 
       const prevUser = queryClient.getQueryData<User | null>(['user']);
 
-      console.log({ prevUser });
-
       queryClient.setQueryData(['user'], null);
 
       return { prevUser };
     },
     onError: (error, _, context) => {
-      console.log('error when logging out');
-
       queryClient.setQueryData(['user'], context?.prevUser);
     },
     onSettled: () => {

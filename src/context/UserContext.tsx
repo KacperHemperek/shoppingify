@@ -37,14 +37,8 @@ export const UserContextProvider = ({
       try {
         const user = await fetchFn({ url: '/api/session' });
 
-        if (!user.email) {
-          console.log('no email but response ok');
-          return null;
-        }
-
         return { email: user.email, id: user.userId, name: user.name };
       } catch (error: any) {
-        console.error(error.message);
         return null;
       }
     },

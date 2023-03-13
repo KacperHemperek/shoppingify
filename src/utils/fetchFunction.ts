@@ -16,10 +16,8 @@ export async function fetchFn(fetchInput: {
   const data = await res.json();
 
   if (!res.ok) {
-    console.warn('response is not ok');
     throw new Error(data.message);
   }
 
-  console.log({ returning: data });
   return data;
 }

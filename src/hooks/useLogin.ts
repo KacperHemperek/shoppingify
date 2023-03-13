@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 
 function useLogin() {
   const loginEmail = async (userInput: { email: string; password: string }) => {
-    const res = await fetchFn({
+    await fetchFn({
       url: '/api/session',
       body: {
         email: userInput.email,
@@ -12,8 +12,6 @@ function useLogin() {
       },
       method: 'POST',
     });
-
-    return res;
   };
 
   return useMutation({

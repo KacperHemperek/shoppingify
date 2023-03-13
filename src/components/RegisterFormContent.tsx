@@ -55,9 +55,7 @@ function RegisterFormContent() {
     try {
       await signUp(data);
       navigate('/');
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) {}
   };
 
   return (
