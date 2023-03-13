@@ -1,12 +1,7 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import NavOption from '../components/NavOption';
 import { useUser } from '../hooks/useUser';
-import { signOut } from 'firebase/auth';
-import { auth } from '../lib/firebase';
 import NotLoggedIn from '../router/routes/NotLoggedIn';
 import Loadingpage from '../router/routes/Loadingpage';
-import Logo from '../assets/logo.svg';
-import React, { createContext, useContext, useState } from 'react';
 import SideBar from '../components/SideBar';
 import NavBar from '../components/NavBar';
 

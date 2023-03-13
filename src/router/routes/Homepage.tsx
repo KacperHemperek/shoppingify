@@ -1,8 +1,7 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useMemo, useState } from 'react';
 import CategoriesList from '../../components/CategoriesList';
-import useCategories from '../../hooks/useCategories';
-import { useUser } from '../../hooks/useUser';
+
 import { CategoryType } from '../../types/Category.interface';
 import Loadingpage from './Loadingpage';
 
@@ -26,22 +25,21 @@ function filterCategories(
 
   return result;
 }
-
+//TODO: get categories from backend
 function Homepage() {
-  const { user } = useUser();
-  const { data, isLoading, error } = useCategories(user?.uid);
+  // const { data, isLoading, error } = useCategories(user?.id);
   const [searchQ, setSearchQ] = useState('');
 
   const filteredCategories = useMemo(
-    () => filterCategories(searchQ, data),
-    [data, searchQ]
+    () => filterCategories(searchQ, []),
+    [[], searchQ]
   );
-
-  if (error) {
+  //TODO: handle loading categories
+  if (false) {
     return <div>Error occured</div>;
   }
 
-  if (isLoading) {
+  if (false) {
     return <Loadingpage />;
   }
 
@@ -64,7 +62,7 @@ function Homepage() {
         </div>
       </header>
       <div className='flex w-full flex-col'>
-        <CategoriesList categories={filteredCategories} />
+        <CategoriesList categories={filteredCategories ?? []} />
       </div>
     </div>
   );

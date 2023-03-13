@@ -14,14 +14,16 @@ import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '@/lib/firebase';
 import useSidebar from '@/hooks/useSidebar';
+import { useLogout } from '@/hooks/useLogout';
 
 function NavBar() {
   const { user } = useUser();
+  const { mutateAsync } = useLogout();
   const navigate = useNavigate();
   const { setSidebarOption } = useSidebar();
 
   const logout = async () => {
-    await signOut(auth);
+    await mutateAsync();
     navigate('/login');
   };
 

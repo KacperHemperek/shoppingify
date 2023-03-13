@@ -94,7 +94,7 @@ function useAddItem() {
     },
     onSettled: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['categories', user?.uid],
+        queryKey: ['categories', user?.id],
       });
     },
   });
@@ -107,7 +107,6 @@ const AddItemSchema = z.object({
 });
 
 export type AddItemType = z.infer<typeof AddItemSchema>;
-
 
 //FIXME: isValid not updating only on category change
 function AddItemForm() {

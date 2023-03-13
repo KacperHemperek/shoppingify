@@ -1,18 +1,24 @@
-import { User } from 'firebase/auth';
-import { collection, doc, DocumentReference } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react';
-import { auth, db } from '../lib/firebase';
+import { fetchFn } from '@/utils/fetchFunction';
+import { useQuery } from '@tanstack/react-query';
+import { DocumentReference } from 'firebase/firestore';
+import React from 'react';
+
+export type User = {
+  name: string;
+  id: string;
+  email: string;
+};
 
 type UserContextType = {
   user: User | null;
-  error: string | null;
+  error: string | undefined | unknown;
   loading: boolean;
   userRefFirebase: null | DocumentReference;
 };
 
 export const UserContext = React.createContext<UserContextType>({
   user: null,
-  error: null,
+  error: undefined,
   loading: false,
   userRefFirebase: null,
 });
@@ -22,41 +28,28 @@ export const UserContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-  // const [userRefFirebase, setUserRefFirebase] =
-  //   useState<DocumentReference | null>(null);
-  const userRefFirebase = user ? doc(collection(db, 'users'), user?.uid) : null;
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(
-      (user) => {
-        // setUserRefFirebase(doc(collection(db, 'users'), user?.uid));
-        setLoading(true);
-        setUser(user);
-        setError(null);
-        setLoading(false);
-      },
-      (error) => {
-        setLoading(true);
-        console.error(error.message);
-        setError(error.message);
-        setLoading(false);
+  const {
+    data: user,
+    isLoading,
+    error,
+  } = useQuery<User | null>({
+    queryFn: async () => {
+      try {
+        return (await fetchFn({ url: '/api/session' })).data;
+      } catch (error: any) {
+        return null;
       }
-    );
-
-    return () => {
-      unsubscribe();
-    };
-  }, [auth]);
+    },
+    queryKey: ['user'],
+  });
 
   return (
     <UserContext.Provider
       value={{
-        user,
+        user: user ?? null,
         error,
-        loading,
-        userRefFirebase,
+        loading: isLoading,
+        userRefFirebase: null,
       }}
     >
       {children}

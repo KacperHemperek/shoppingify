@@ -1,6 +1,6 @@
+import { queryClient } from '@/App';
+import { fetchFn } from '@/utils/fetchFunction';
 import { useMutation } from '@tanstack/react-query';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { auth } from '../lib/firebase';
 
 function useSignUp() {
   const signUp = async ({
@@ -12,11 +12,19 @@ function useSignUp() {
     password: string;
     name: string;
   }) => {
-    const cred = await createUserWithEmailAndPassword(auth, email, password);
-    await updateProfile(cred.user, { displayName: name });
+    await fetchFn({
+      url: '/api/session/new',
+      body: { email, name, password },
+      method: 'POST',
+    });
   };
 
-  return useMutation({ mutationFn: signUp });
+  return useMutation({
+    mutationFn: signUp,
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    },
+  });
 }
 
 export default useSignUp;
